@@ -419,13 +419,14 @@ window.addEventListener('contextmenu', function (e) {
 
 document.addEventListener('mousedown', function (e) {
     if (e.button == 0) {
-        if (activeCharacter && Date.now() - activeCharacter.lock > 2000) {
+        if (activeCharacter) {
+            if (!activeCharacter.lock || Date.now() - activeCharacter.lock > 1000) {
             mode = 'activeCharacter';
             originCoord.x1 = clientLoc.x
             originCoord.y1 = clientLoc.y
             originCoord.x2 = parseInt(activeCharacter.x)
             originCoord.y2 = parseInt(activeCharacter.y)
-
+        }
         } else if (mode == 'draw') {
             startDrawing(e)
         } else if (mode == 'erase') {
