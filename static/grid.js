@@ -18,7 +18,7 @@ let showEraser = false;
 let rush = true;
 let activeCharacter = false;
 let updateStep = Date.now()
-
+let snap = true
 let showBoundingBoxes = false;
 
 
@@ -64,7 +64,7 @@ socket.on('characterUpdate', function (data) {
                 character.y = data.character.y;
                 lock = true;
             }
-            if (character.direction != data.character.direction){
+            if (character.direction != data.character.direction) {
                 character.direction = data.character.direction
                 lock = true;
             }
@@ -199,40 +199,115 @@ let eraser = {
     }
 }
 
+class Button {
+    constructor(name, x, y, height, width, clickAction, color) {
+        this.name = name;
+        this.x = x;
+        this.y = y;
+        this.click = clickAction;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+    }
+    draw = () => {
+        ctx.beginPath()
+        ctx.fillStyle = this.color;
+        ctx.rect(this.x, this.y, this.width, this.height)
+        ctx.fill()
+        ctx.font = "20px Arial";
+        ctx.fillStyle = "white";
+        ctx.fillText(this.name, this.x + 20, this.y + 20)
+        ctx.closePath()
+    }
+}
+
+
+
+let buttons = [
+    new Button("Toggle Snap",
+        0,
+        0,
+        30,
+        170,
+        () => {
+            if (snap) {
+                snap = false;
+            } else {
+                snap = true;
+            }
+        },
+        "slategrey"
+    )
+]
+
 var hexagon = new Polygon([[28.867, 100], [0, 50], [28.867, 0], [86.601, 0], [115.47, 50], [86.601, 100]], 0, 0, "white", "black", 2)
 class Character {
-    constructor(name, x, y, tokenImage, fullImage, backgroundColor) {
+    constructor(name, x, y, images, primaryColor, secondaryColor, size) {
         this.x = x;
         this.y = y;
         this.name = name;
-        this.tokenImage = tokenImage;
-        this.fullImage = fullImage;
-        this.background = backgroundColor;
+        this.images = images;
+        this.primaryColor = primaryColor;
+        this.secondaryColor = secondaryColor;
         this.direction = 1;
+        this.height = this.images.front.height
+        this.width = this.images.front.width
+        this.size = size
     }
-    drawHex = () => {
-        ctx.fillStyle = this.background;
+    drawHex = (transparency) => {
+        if (transparency) {
+        }
+        ctx.fillStyle = this.primaryColor;
         let hex = [[28.867, 100], [0, 50], [28.867, 0], [86.601, 0], [115.47, 50], [86.601, 100], [28.867, 100], [0, 50]];
         ctx.beginPath()
         for (let i = 0; i < hex.length; i++) {
             ctx.lineTo(hex[i][0] + this.x + center.x, hex[i][1] + this.y + center.y);
         }
-        ctx.strokeStyle = this.color;
-        ctx.strokeWidth = this.width;
+        ctx.strokeStyle = this.primaryColor;
+        ctx.globalAlpha = 0.5;
         ctx.fill()
-        ctx.strokeStyle = "black"
-        ctx.lineWidth = 3
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = this.secondaryColor;
+        ctx.lineWidth = 5;
         ctx.stroke()
         ctx.closePath()
+        if (transparency) {
+        }
     }
-    drawToken = () => {
+    // drawToken = () => {
 
-        ctx.drawImage(this.tokenImage, this.x + center.x, this.y + center.y)
-        // this.drawDirection();
-    }
+    //     ctx.drawImage(this.tokenImage, this.x + center.x, this.y + center.y)
+    //     // this.drawDirection();
+    // }
     drawFull = () => {
-        ctx.drawImage(this.fullImage, this.x + center.x - 247, this.y + center.y - 500)
-        // this.drawDirection()
+        // if (allFull) {
+        // }
+        let hs = this.size
+        let ws = this.size
+        let rscale = 1 / this.size;
+        let rxs = this.x * rscale
+        let rys = this.y * rscale
+        let yOffset = this.height
+        let xOffset = Math.mean([this.width, 130]) / 2 - 130
+        this.drawHex(true)
+        this.drawDirection()
+        ctx.save()
+        ctx.scale(ws, hs)
+        if (this.direction == 1) {
+            ctx.drawImage(this.images.back, rxs + xOffset + center.x * rscale, (60 * rscale) + rys - yOffset + center.y * rscale)
+        } else if (this.direction == 2) {
+            ctx.drawImage(this.images.threeQuartersBackLeft, rxs + xOffset + center.x * rscale, (60 * rscale) + rys - yOffset + center.y * rscale)
+        } else if (this.direction == 3) {
+            ctx.drawImage(this.images.threeQuartersFrontLeft, rxs + xOffset + center.x * rscale, (60 * rscale) + rys - yOffset + center.y * rscale)
+        } else if (this.direction == 4) {
+            ctx.drawImage(this.images.front, rxs + xOffset + center.x * rscale, (60 * rscale) + rys - yOffset + center.y * rscale)
+        } else if (this.direction == 5) {
+            ctx.drawImage(this.images.threeQuartersFrontRight, rxs + xOffset + center.x * rscale, (60 * rscale) + rys - yOffset + center.y * rscale)
+        } else if (this.direction == 6) {
+            ctx.drawImage(this.images.threeQuartersBackRight, rxs + xOffset + center.x * rscale, (60 * rscale) + rys - yOffset + center.y * rscale)
+        }
+        ctx.restore()
+        // ctx.drawImage(this.fullImage, this.x + center.x + xOffset - 247, this.y + center.y - 500)
     }
     drawDirection = () => {
         var radius = 50;
@@ -240,15 +315,16 @@ class Character {
         var center_x = this.x + center.x + 60;
         var center_y = this.y + center.y + 50;
 
-        function drawPoint(angle, distance) {
+        const drawPoint = (angle, distance) => {
             var x = center_x + radius * Math.cos(-angle * Math.PI / 180) * distance;
             var y = center_y + radius * Math.sin(-angle * Math.PI / 180) * distance;
-
+            ctx.fillStyle = this.primaryColor;
+            ctx.strokeStyle = this.secondaryColor;
             ctx.beginPath();
             ctx.arc(x, y, point_size, 0, 2 * Math.PI);
-            ctx.fillStyle = "white";
-            ctx.strokeStyle = "black";
+            ctx.globalAlpha = 0.7
             ctx.fill();
+            ctx.globalAlpha = 1;
             ctx.stroke();
         }
         //Execution
@@ -260,7 +336,12 @@ let characterNodes = document.getElementsByTagName('character');
 let characters = [];
 for (let character of characterNodes) {
     let images = character.getElementsByTagName('img')
-    let char = new Character(character.getAttribute('name'), 0, 0, images[0], images[1], character.getAttribute('color'))
+    let imageObj = {}
+    for (let i = 0; i < images.length; i++) {
+        var image = images[i]
+        imageObj[image.getAttribute('name')] = image;
+    }
+    let char = new Character(character.getAttribute('name'), 0, 0, imageObj, character.getAttribute('color'), character.getAttribute('outline'), character.getAttribute("size"))
     char.id = characters.length
     characters.push(char)
 }
@@ -308,26 +389,32 @@ function drawScreen() {
         drawQ.forEach((shape) => {
             shape.draw()
         })
-        if (allFull) {
-            characters.forEach((character) => {
-                character.drawFull()
-            })
-        } else {
-            characters.forEach((character) => {
-                character.drawHex()
-                character.drawToken()
-            })
-            if (activeCharacter) {
-                activeCharacter.drawHex()
-                activeCharacter.drawFull()
-            }
-            characters.forEach((character) => {
-                character.drawDirection()
-            })
-        }
+        characters.forEach((character) => {
+            character.drawFull()
+        })
+        // if (allFull) {
+        //     characters.forEach((character) => {
+        //         character.drawFull()
+        //     })
+        // } else {
+        //     characters.forEach((character) => {
+        //         character.drawHex()
+        //         // character.drawToken()
+        //     })
+        //     if (activeCharacter) {
+        //         activeCharacter.drawHex()
+        //         activeCharacter.drawFull()
+        //     }
+        //     characters.forEach((character) => {
+        //         character.drawDirection()
+        //     })
+        // }
         if (showEraser) {
             eraser.draw()
         }
+        buttons.forEach(function (button) {
+            button.draw()
+        })
         drawStep = Date.now()
         rush = false;
     }
@@ -378,8 +465,16 @@ document.addEventListener('mousemove', function (e) {
         eraserLine(e)
         drawScreen()
     } else if (mode == 'activeCharacter') {
-        activeCharacter.x = originCoord.x2 + (e.clientX - originCoord.x1)
-        activeCharacter.y = originCoord.y2 + (e.clientY - originCoord.y1)
+        if (snap) {
+            activeCharacter.x = (Math.floor((originCoord.x2 + (e.clientX - originCoord.x1)) / 173) * 173) + xsize
+            activeCharacter.y = Math.floor((originCoord.y2 + (e.clientY - originCoord.y1)) / ysize) * ysize
+            if (activeCharacter.y % 100 != 50) {
+                activeCharacter.x -= 86.5
+            }
+        } else {
+            activeCharacter.x = originCoord.x2 + (e.clientX - originCoord.x1)
+            activeCharacter.y = originCoord.y2 + (e.clientY - originCoord.y1)
+        }
         if (Date.now() - 30 > updateStep) {
             characterUpdate(activeCharacter)
         }
@@ -417,16 +512,31 @@ window.addEventListener('contextmenu', function (e) {
 }, false);
 
 
+function buttonProx(e) {
+    for (let i = 0; i < buttons.length; i++) {
+        if (Math.abs(buttons[i].x - e.clientX) < buttons[i].width && Math.abs(buttons[i].y - e.clientY) < buttons[i].height) {
+            console.log("buttonPRox")
+            return buttons[i]
+        }
+    }
+    return false;
+}
+
 document.addEventListener('mousedown', function (e) {
     if (e.button == 0) {
-        if (activeCharacter) {
+        let button = buttonProx(e);
+        if (button) {
+            console.log('clicking', button.name)
+            button.click()
+            drawScreen()
+        } else if (activeCharacter) {
             if (!activeCharacter.lock || Date.now() - activeCharacter.lock > 1000) {
-            mode = 'activeCharacter';
-            originCoord.x1 = clientLoc.x
-            originCoord.y1 = clientLoc.y
-            originCoord.x2 = parseInt(activeCharacter.x)
-            originCoord.y2 = parseInt(activeCharacter.y)
-        }
+                mode = 'activeCharacter';
+                originCoord.x1 = clientLoc.x
+                originCoord.y1 = clientLoc.y
+                originCoord.x2 = parseInt(activeCharacter.x)
+                originCoord.y2 = parseInt(activeCharacter.y)
+            }
         } else if (mode == 'draw') {
             startDrawing(e)
         } else if (mode == 'erase') {
@@ -698,4 +808,12 @@ setInterval(() => {
 function characterUpdate(character) {
     character.timestamp = Date.now()
     socket.emit("characterUpdate", { character: character })
+}
+
+Math.mean = function (arr) {
+    let sum = 0;
+    arr.forEach((value) => {
+        sum += value
+    })
+    return sum / arr.length;
 }
