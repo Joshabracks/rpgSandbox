@@ -3,8 +3,8 @@ document.onkeydown = function (e) {
         drag = true
         originCoord.x1 = clientLoc.x
         originCoord.y1 = clientLoc.y
-        originCoord.x2 = parseInt(center.x)
-        originCoord.y2 = parseInt(center.y)
+        originCoord.x2 = center.x
+        originCoord.y2 = center.y
     }
     if (e.key == "Shift") {
         if (activeCharacter) {

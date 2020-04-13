@@ -7,12 +7,12 @@ Math.mean = function (arr) {
 }
 
 function getX(e) {
-    let solution = e.clientX - center.x - canvas.offsetLeft;
-    return solution
+    let solution = zo(e.clientX) - center.x - zo(canvas.offsetLeft);
+    return solution;
 }
 function getY(e) {
-    let solution = e.clientY - center.y - canvas.offsetTop;
-    return solution
+    let solution = zo(e.clientY) - center.y - zo(canvas.offsetTop);
+    return solution;
 }
 function buttonProx(e) {
     for (let i = 0; i < buttons.length; i++) {
@@ -126,4 +126,12 @@ function isBoxInside(shape1, shape2) {
 
 function pointProx(p, q) {
     return Math.abs(p[0] - q[0]) + Math.abs(p[1] - q[1])
+}
+
+function z(number){
+    return number * zoom;
+}
+
+function zo(number) {
+    return number * (1 / zoom)
 }

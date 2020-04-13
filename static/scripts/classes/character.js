@@ -18,14 +18,14 @@ class Character {
         let hex = [[28.867, 100], [0, 50], [28.867, 0], [86.601, 0], [115.47, 50], [86.601, 100], [28.867, 100], [0, 50]];
         ctx.beginPath()
         for (let i = 0; i < hex.length; i++) {
-            ctx.lineTo(hex[i][0] + this.x + center.x, hex[i][1] + this.y + center.y);
+            ctx.lineTo(z(hex[i][0] + this.x + center.x), z(hex[i][1] + this.y + center.y));
         }
         ctx.strokeStyle = this.primaryColor;
         ctx.globalAlpha = 0.5;
         ctx.fill()
         ctx.globalAlpha = 1;
         ctx.strokeStyle = this.secondaryColor;
-        ctx.lineWidth = 5;
+        ctx.lineWidth = z(5);
         ctx.stroke()
         ctx.closePath()
         if (transparency) {
@@ -53,7 +53,7 @@ class Character {
         this.drawHex(true)
         this.drawDirection()
         ctx.save()
-        ctx.scale(ws, hs)
+        ctx.scale(z(ws), z(hs))
         if (this.direction == 1) {
             ctx.drawImage(this.images.back, rxs + xOffset + center.x * rscale, (60 * rscale) + rys - yOffset + center.y * rscale)
         } else if (this.direction == 2) {
@@ -82,7 +82,7 @@ class Character {
             ctx.fillStyle = this.primaryColor;
             ctx.strokeStyle = this.secondaryColor;
             ctx.beginPath();
-            ctx.arc(x, y, point_size, 0, 2 * Math.PI);
+            ctx.arc(z(x), z(y), z(point_size), 0, 2 * Math.PI);
             ctx.globalAlpha = 0.7
             ctx.fill();
             ctx.globalAlpha = 1;

@@ -29,6 +29,7 @@ let activeCharacter = false;
 let updateStep = Date.now()
 let snap = true
 let showBoundingBoxes = false;
+let zoom = 1;
 let pencil = {
     color: "red",
     width: 5
@@ -40,7 +41,7 @@ let eraser = {
     y: 0,
     draw: () => {
         ctx.beginPath();
-        ctx.arc(eraser.x + center.x, eraser.y + center.y, 25, 0, 2 * Math.PI)
+        ctx.arc(z(eraser.x + center.x), z(eraser.y + center.y), z(25), 0, 2 * Math.PI)
         ctx.fillStyle = "pink";
         ctx.fill()
         ctx.closePath()

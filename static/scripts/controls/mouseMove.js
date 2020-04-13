@@ -2,8 +2,8 @@ document.addEventListener('mousemove', function (e) {
     clientLoc.x = e.clientX
     clientLoc.y = e.clientY
     if (drag) {
-        center.x = originCoord.x2 + (e.clientX - originCoord.x1)
-        center.y = originCoord.y2 + (e.clientY - originCoord.y1)
+        center.x = originCoord.x2 + zo(e.clientX - originCoord.x1)
+        center.y = originCoord.y2 + zo(e.clientY - originCoord.y1)
         drawScreen()
     } else if (drawing) {
         let tempX = getX(e)
@@ -17,14 +17,14 @@ document.addEventListener('mousemove', function (e) {
         drawScreen()
     } else if (mode == 'activeCharacter') {
         if (snap) {
-            activeCharacter.x = (Math.floor((originCoord.x2 + (e.clientX - originCoord.x1)) / 173) * 173) + xsize
-            activeCharacter.y = Math.floor((originCoord.y2 + (e.clientY - originCoord.y1)) / ysize) * ysize
+            activeCharacter.x = (Math.floor((originCoord.x2 + (getX(e) - originCoord.x1)) / 173) * 173) + xsize
+            activeCharacter.y = Math.floor((originCoord.y2 + (getY(e) - originCoord.y1)) / ysize) * ysize
             if (activeCharacter.y % 100 != 50) {
                 activeCharacter.x -= 86.5
             }
         } else {
-            activeCharacter.x = originCoord.x2 + (e.clientX - originCoord.x1)
-            activeCharacter.y = originCoord.y2 + (e.clientY - originCoord.y1)
+            activeCharacter.x = originCoord.x2 + (getX(e) - originCoord.x1)
+            activeCharacter.y = originCoord.y2 + (getY(e) - originCoord.y1)
         }
         if (Date.now() - 30 > updateStep) {
             characterUpdate(activeCharacter)
@@ -32,8 +32,10 @@ document.addEventListener('mousemove', function (e) {
         drawScreen()
     } else {
         let active = false;
+        let tempX = getX(e);
+        let tempY = getY(e);
         characters.forEach((character) => {
-            if (pointProx([character.x + center.x + 60, character.y + center.y + 55], [e.clientX, e.clientY]) < 60) {
+            if (pointProx([character.x + center.x + 60, character.y + center.y + 55], [tempX, tempY]) < 60) {
                 active = true;
                 activeCharacter = character;
             }

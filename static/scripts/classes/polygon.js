@@ -12,15 +12,15 @@ class Polygon {
     draw = () => {
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        ctx.moveTo(this.points[0][0] + this.x + center.x, this.points[0][1] + this.y + center.y)
+        ctx.moveTo(z(this.points[0][0] + this.x + center.x), z(this.points[0][1] + this.y + center.y))
         for (let i = 0; i < this.points.length; i++) {
-            ctx.lineTo(this.points[i][0] + this.x + center.x, this.points[i][1] + this.y + center.y);
+            ctx.lineTo(z(this.points[i][0] + this.x + center.x), z(this.points[i][1] + this.y + center.y));
         }
         ctx.closePath();
         ctx.fill();
         if (this.strokeColor) {
             ctx.strokeStyle = this.strokeColor;
-            ctx.lineWidth = this.strokeWidth;
+            ctx.lineWidth = z(this.strokeWidth);
             ctx.stroke()
         }
         if (showBoundingBoxes === true) {
@@ -29,7 +29,7 @@ class Polygon {
     }
     showBox = () => {
         this.setBoundingBox()
-        ctx.rect(this.boundingBox.left + this.x, this.boundingBox.top + this.y, this.width, this.height)
+        ctx.rect(z(this.boundingBox.left + this.x), z(this.boundingBox.top + this.y), z(this.width), z(this.height))
         ctx.strokeStyle = 'grey'
         ctx.stroke()
     }

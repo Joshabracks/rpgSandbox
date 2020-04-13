@@ -15,7 +15,8 @@ const scripts = [
     'scripts/controls/keyUp.js',
     'scripts/controls/mouseDown.js',
     'scripts/controls/mouseUp.js',
-    'scripts/controls/mouseMove.js'
+    'scripts/controls/mouseMove.js',
+    'scripts/controls/wheel.js'
 ]
 scripts.forEach((script) => {
     var _script = document.createElement('script');
