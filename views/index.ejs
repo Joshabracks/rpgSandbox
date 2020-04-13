@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hex Grid</title>
+    <title>RPG Sandbox</title>
 </head>
-
-
-
 <body style="overflow: hidden;">
     <div id="imageContainer" style="display: none;">
         <character name="Modern Girl 01" color="#ecd97f" outline="#467f94" size=".25">
@@ -19,6 +15,14 @@
             <img name="threeQuartersBackLeft" src="images/modern/girl01/threeQuartersBackLeft.png">
             <img name="threeQuartersFrontRight" src="images/modern/girl01/threeQuartersFrontRight.png">
             <img name="threeQuartersBackRight" src="images/modern/girl01/threeQuartersBackRight.png">
+        </character>
+        <character name="Modern Girl 02" color="#de413a" outline="#911712" size=".35">
+            <img name="front" src="images/modern/girl02/front.png">
+            <img name="back" src="images/modern/girl02/back.png">
+            <img name="threeQuartersFrontLeft" src="images/modern/girl02/threeQuartersFrontLeft.png">
+            <img name="threeQuartersBackLeft" src="images/modern/girl02/threeQuartersBackLeft.png">
+            <img name="threeQuartersFrontRight" src="images/modern/girl02/threeQuartersFrontRight.png">
+            <img name="threeQuartersBackRight" src="images/modern/girl02/threeQuartersBackRight.png">
         </character>
         <character name="Modern Man 01" color="#dd5f60" outline="#626d4d" size=".25">
             <img name="front" src="images/modern/man01/front.png">
@@ -40,8 +44,8 @@
         </character>
     </div>
     <canvas id='canvas'></canvas>
-    <script type="text/javascript" src="/socket/socket.io.js"></script>
-    <script src="./grid.js"></script>
+    <script src="/socket/socket.io.js"></script>
+    <script src="scripts/master.js"></script>
 </body>
 
 </html>
