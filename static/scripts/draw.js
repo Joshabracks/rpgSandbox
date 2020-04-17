@@ -50,6 +50,7 @@ function drawScreen() {
     buttons.forEach(function (button) {
         button.draw()
     })
+    die.draw()
     window.requestAnimationFrame(drawScreen)
 }
 

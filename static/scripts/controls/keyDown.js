@@ -5,6 +5,7 @@ document.onkeydown = function (e) {
         originCoord.y1 = clientLoc.y
         originCoord.x2 = center.x
         originCoord.y2 = center.y
+        die.r1++;
     }
     if (e.key == "Shift") {
         if (activeCharacter) {

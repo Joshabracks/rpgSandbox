@@ -7,6 +7,7 @@ const scripts = [
     'scripts/classes/polygon.js',
     'scripts/classes/character.js',
     'scripts/classes/button.js',
+    'scripts/classes/dice.js',
     'scripts/draw.js',
     'scripts/window.js',
     'scripts/buttons.js',

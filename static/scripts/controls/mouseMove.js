@@ -1,4 +1,6 @@
 document.addEventListener('mousemove', function (e) {
+    die.pitch = e.clientX * 0.0001;
+    die.roll = e.clientY * 0.0001;
     clientLoc.x = e.clientX
     clientLoc.y = e.clientY
     if (drag) {
