@@ -14,46 +14,43 @@ function startErasing(e) {
 }
 
 function drawScreen() {
-    if (Date.now() - drawStep > 15 || rush) {
-        ctx.fillStyle = "black"
-        ctx.rect(0, 0, width, height)
-        ctx.fill()
-        let y = ysize
-        let x = xsize
-        let even = false
-        for (let row = 0; row < mapHeight; row++) {
-            for (let col = 0; col < mapWidth; col++) {
-                hexagon.x = x;
-                hexagon.y = y;
-                hexagon.draw()
-                x += 173
-            }
-            y += ysize
-            if (even) {
-                x = xsize
-                even = false
-            } else {
-                x = 63
-                even = true
-            }
+    ctx.fillStyle = "black"
+    ctx.rect(0, 0, width, height)
+    ctx.fill()
+    let y = ysize
+    let x = xsize
+    let even = false
+    for (let row = 0; row < mapHeight; row++) {
+        for (let col = 0; col < mapWidth; col++) {
+            hexagon.x = x;
+            hexagon.y = y;
+            hexagon.draw()
+            x += 173
         }
-        hexagon.x = 0;
-        hexagon.y = 0;
-        drawQ.forEach((shape) => {
-            shape.draw()
-        })
-        characters.forEach((character) => {
-            character.drawFull()
-        })
-        if (showEraser) {
-            eraser.draw()
+        y += ysize
+        if (even) {
+            x = xsize
+            even = false
+        } else {
+            x = 63
+            even = true
         }
-        buttons.forEach(function (button) {
-            button.draw()
-        })
-        drawStep = Date.now()
-        rush = false;
     }
+    hexagon.x = 0;
+    hexagon.y = 0;
+    drawQ.forEach((shape) => {
+        shape.draw()
+    })
+    characters.forEach((character) => {
+        character.drawFull()
+    })
+    if (showEraser) {
+        eraser.draw()
+    }
+    buttons.forEach(function (button) {
+        button.draw()
+    })
+    window.requestAnimationFrame(drawScreen)
 }
 
 function drawLine(Line) {
@@ -89,6 +86,6 @@ function eraserLine(e) {
 
 
 //Refresh screen by set amount || This can be removed if all functions are updated properly to draw when any change is made
-setInterval(() => {
-    drawScreen()
-}, 3000)
+// setInterval(() => {
+//     drawScreen()
+// }, 3000)

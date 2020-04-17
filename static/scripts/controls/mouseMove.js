@@ -4,17 +4,17 @@ document.addEventListener('mousemove', function (e) {
     if (drag) {
         center.x = originCoord.x2 + zo(e.clientX - originCoord.x1)
         center.y = originCoord.y2 + zo(e.clientY - originCoord.y1)
-        drawScreen()
+        // drawScreen()
     } else if (drawing) {
         let tempX = getX(e)
         let tempY = getY(e)
         if (Math.abs(tempX - drawQ[drawing - 1].points[drawQ[drawing - 1].points.length - 1][0]) > minStep || Math.abs(tempY - drawQ[drawing - 1].points[drawQ[drawing - 1].points.length - 1][1]) > minStep) {
             drawQ[drawing - 1].points.push([tempX, tempY])
         }
-        drawScreen();
+        // drawScreen();
     } else if (erasing) {
         eraserLine(e)
-        drawScreen()
+        // drawScreen()
     } else if (mode == 'activeCharacter') {
         if (snap) {
             activeCharacter.x = (Math.floor((getX(e) - zo(60)) / 173) * 173) + xsize
@@ -29,7 +29,7 @@ document.addEventListener('mousemove', function (e) {
         if (Date.now() - 30 > updateStep) {
             characterUpdate(activeCharacter)
         }
-        drawScreen()
+        // drawScreen()
     } else {
         let active = false;
         let tempX = getX(e);
@@ -43,7 +43,7 @@ document.addEventListener('mousemove', function (e) {
         if (!active) {
             activeCharacter = false;
         } else {
-            drawScreen()
+            // drawScreen()
         }
     }
 })

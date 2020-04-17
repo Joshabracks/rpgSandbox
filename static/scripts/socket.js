@@ -26,7 +26,7 @@ socket.on('initialUpdate', function (data) {
         polyLine.id = data.drawQ[line].id
         drawQ.push(polyLine)
     }
-    drawScreen()
+    // drawScreen()
 })
 socket.on('characterUpdate', function (data) {
     characters.forEach((character) => {
@@ -49,13 +49,13 @@ socket.on('characterUpdate', function (data) {
             }
         }
     })
-    drawScreen()
+    // drawScreen()
 })
 socket.on('newLine', function (data) {
     let thisLine = new Polyline(data.line.points, data.line.x, data.line.y, data.line.color, data.line.width)
     thisLine.id = data.line.id
     drawQ.push(thisLine)
-    drawScreen()
+    // drawScreen()
 })
 socket.on('erase', function (data) {
     let len = JSON.parse(JSON.stringify(drawQ.length));
@@ -66,7 +66,7 @@ socket.on('erase', function (data) {
         }
     }
     drawQ = temp;
-    drawScreen()
+    // drawScreen()
 })
 socket.on('newCharacter', function(data){
     characters.push(data.character)

@@ -5,7 +5,7 @@ document.addEventListener('mousedown', function (e) {
         if (button) {
             // console.log('clicking', button.name)
             button.click()
-            drawScreen()
+            // drawScreen()
         } else if (activeCharacter) {
             if (!activeCharacter.lock || Date.now() - activeCharacter.lock > 1000) {
                 mode = 'activeCharacter';
@@ -28,14 +28,14 @@ document.addEventListener('mousedown', function (e) {
                 activeCharacter.direction = 1;
             }
             characterUpdate(activeCharacter)
-            drawScreen()
+            // drawScreen()
         } else {
             mode = "erase";
             erasing = true;
             showEraser = true;
             eraserLine(e)
             rush = true
-            drawScreen()
+            // drawScreen()
         }
     }
     if (e.button == 1) {

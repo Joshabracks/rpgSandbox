@@ -14,14 +14,14 @@ document.onkeydown = function (e) {
             characterUpdate(char)
         }
     }
-    if (e.key = "Delete") {
-        let ts = activeCharacter.id
-        let temp = []
-        for (let i = 0; i < characters.length; i++) {
-            if (characters[i].id != ts) {
-                temp.push(characters[i])
-            }
-        }
-        characters = temp;
-    }
+    // if (e.key = "Delete") {
+    //     let ts = activeCharacter.id
+    //     let temp = []
+    //     for (let i = 0; i < characters.length; i++) {
+    //         if (characters[i].id != ts) {
+    //             temp.push(characters[i])
+    //         }
+    //     }
+    //     characters = temp;
+    // }
 }

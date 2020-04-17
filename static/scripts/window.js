@@ -2,10 +2,11 @@
 window.onresize = function () {
     fitCanvas()
     rush = true;
-    drawScreen()
+    // drawScreen()
 }
 window.onload = function () {
-    drawScreen()
+    sortCharacters();
+    window.requestAnimationFrame(drawScreen);
 }
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
@@ -61,7 +62,7 @@ for (let character of characterNodes) {
     char.id = characters.length
     characters.push(char)
 }
-console.log("WEEEENDOW")
+
 //END CREATING TEST CHARACTERS
 function fitCanvas() {
     height = window.innerHeight
@@ -75,5 +76,5 @@ let drawQ = []
 var hexagon = new Polygon([[28.867, 100], [0, 50], [28.867, 0], [86.601, 0], [115.47, 50], [86.601, 100]], 0, 0, "white", "black", 2)
 let xsize = 150
 let ysize = 50
-console.log(ysize)
 //END HEXAGON STUFF
+

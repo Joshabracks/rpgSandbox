@@ -24,6 +24,9 @@ function buttonProx(e) {
     return false;
 }
 
+function sortCharacters() {
+    characters.sort((a, b) => (a.y < b.y) ? -1 : 1)
+}
 
 function boxProx(shape1, shape2) {
     if (shape1.boundingBox.left + shape1.x < shape2.boundingBox.right + shape2.x

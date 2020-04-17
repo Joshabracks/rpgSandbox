@@ -5,21 +5,21 @@ document.addEventListener('mouseup', function (e) {
             drawStep = 0;
             rush = true;
             socket.emit("newLine", { line: drawQ[drawQ.length - 1] })
-            drawScreen()
+            // drawScreen()
             drawing = false;
         }
         if (erasing) {
             drawStep = 0;
             rush = true;
-            drawScreen()
+            // drawScreen()
             erasing = false;
             showEraser = false;
         }
         if (mode == 'activeCharacter') {
             mode = 'draw';
-            characters.sort((a, b) => (a.y < b.y) ? -1 : 1)
+            sortCharacters()
             characterUpdate(activeCharacter)
-            drawScreen()
+            // drawScreen()
         }
     }
     if (e.button == 2) {
@@ -27,7 +27,7 @@ document.addEventListener('mouseup', function (e) {
         erasing = false;
         showEraser = false;
         rush = true;
-        drawScreen()
+        // drawScreen()
     }
     if (e.button == 1) {
         drag = false;
