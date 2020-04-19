@@ -211,9 +211,12 @@ class D10 {
         }
     }
     draw() {
+        ctx.save();
         let order = this.sortSides();
         this.newPos(this.sides[order[0].side], order[0].side);
         this.rotate();
+        ctx.scale(z(width) / width, z(height) / height);
+        ctx.translate(center.x, center.y)
         for (let i = 0; i < order.length; i++) {
             if (i == 6) {
                 ctx.save()
@@ -266,6 +269,7 @@ class D10 {
         if (blah > 0) {
             blah--
         }
+        ctx.restore()
     }
     color(side) {
         let r;
