@@ -24,6 +24,12 @@ function buttonProx(e) {
     return false;
 }
 
+Math.distance = function (A, B) {
+    var a = A.x - B.x;
+    var b = A.y - B.y;
+    return Math.sqrt(a * a + b * b);
+}
+
 function sortCharacters() {
     characters.sort((a, b) => (a.y < b.y) ? -1 : 1)
 }
@@ -131,7 +137,7 @@ function pointProx(p, q) {
     return Math.abs(p[0] - q[0]) + Math.abs(p[1] - q[1])
 }
 
-function z(number){
+function z(number) {
     return number * zoom;
 }
 

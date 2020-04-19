@@ -6,6 +6,11 @@ document.addEventListener('mousedown', function (e) {
             // console.log('clicking', button.name)
             button.click()
             // drawScreen()
+        } else if (distancer) {
+            distancer.center.x = e.clientX;
+            distancer.center.y = e.clientY;
+        } else if (roll) {
+            dice.push(new D10(e.clientX, e.clientY))
         } else if (activeCharacter) {
             if (!activeCharacter.lock || Date.now() - activeCharacter.lock > 1000) {
                 mode = 'activeCharacter';
@@ -22,7 +27,9 @@ document.addEventListener('mousedown', function (e) {
         }
     }
     if (e.button == 2) {
-        if (activeCharacter) {
+        if (roll) {
+            dice = [];
+        } else if (activeCharacter) {
             activeCharacter.direction++;
             if (activeCharacter.direction > 6) {
                 activeCharacter.direction = 1;

@@ -1,11 +1,16 @@
 document.onkeydown = function (e) {
+    if (e.keyCode == 69) {
+        if (!distancer) {
+            console.log("EEEEE")
+            distancer = { center: {}, end: {} }
+        }
+    }
     if (e.code == "Space") {
         drag = true
         originCoord.x1 = clientLoc.x
         originCoord.y1 = clientLoc.y
         originCoord.x2 = center.x
         originCoord.y2 = center.y
-        die.r1++;
     }
     if (e.key == "Shift") {
         if (activeCharacter) {
@@ -14,6 +19,9 @@ document.onkeydown = function (e) {
             characters.push(char)
             characterUpdate(char)
         }
+    }
+    if (e.keyCode == 82) {
+        roll = true;
     }
     // if (e.key = "Delete") {
     //     let ts = activeCharacter.id

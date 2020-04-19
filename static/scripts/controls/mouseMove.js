@@ -1,12 +1,13 @@
 document.addEventListener('mousemove', function (e) {
-    die.pitch = e.clientX * 0.0001;
-    die.roll = e.clientY * 0.0001;
     clientLoc.x = e.clientX
     clientLoc.y = e.clientY
     if (drag) {
         center.x = originCoord.x2 + zo(e.clientX - originCoord.x1)
         center.y = originCoord.y2 + zo(e.clientY - originCoord.y1)
         // drawScreen()
+    } else if (distancer) {
+        distancer.end.x = e.clientX;
+        distancer.end.y = e.clientY;
     } else if (drawing) {
         let tempX = getX(e)
         let tempY = getY(e)

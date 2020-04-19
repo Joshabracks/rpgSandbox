@@ -15,6 +15,7 @@ let height = window.innerHeight
 canvas.height = height
 canvas.width = width
 let allFull = false;
+let roll = false;
 let mapWidth = 11;
 let mapHeight = 20;
 let center = { x: 0, y: 0 }
@@ -31,6 +32,7 @@ let updateStep = Date.now()
 let snap = true
 let showBoundingBoxes = false;
 let zoom = 1;
+let distancer = false;
 let pencil = {
     color: "red",
     width: 5
@@ -72,6 +74,7 @@ function fitCanvas() {
 }
 //PUSH OBJECTS WITH A .draw() method into the Q.
 let drawQ = []
+let dice = []
 //Points for drawing a hexagon
 var hexagon = new Polygon([[28.867, 100], [0, 50], [28.867, 0], [86.601, 0], [115.47, 50], [86.601, 100]], 0, 0, "white", "black", 2)
 let xsize = 150

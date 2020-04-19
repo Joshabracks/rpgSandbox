@@ -47,10 +47,13 @@ function drawScreen() {
     if (showEraser) {
         eraser.draw()
     }
+    if (distancer) {
+        distanceCircle()
+    }
     buttons.forEach(function (button) {
         button.draw()
     })
-    die.draw()
+    dice.forEach((die) => { die.draw() })
     window.requestAnimationFrame(drawScreen)
 }
 
@@ -60,6 +63,30 @@ function drawLine(Line) {
     ctx.lineWidth = pencil.width;
     ctx.strokeStyle = pencil.color;
     ctx.stroke()
+}
+
+function distanceCircle() {
+    var distance = Math.distance(distancer.center, distancer.end);
+    if (distance > 0) {
+        ctx.beginPath();
+        ctx.strokeStyle = "black";
+        ctx.fillStyle = "rgb(255, 255, 255, 0.25)"
+        ctx.lineWidth = 5;
+        ctx.arc(distancer.center.x, distancer.center.y, distance, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath()
+        ctx.beginPath()
+        ctx.moveTo(distancer.center.x, distancer.center.y);
+        ctx.lineTo(distancer.end.x, distancer.end.y);
+        ctx.stroke();
+        ctx.closePath();
+        ctx.fillStyle = "white";
+        ctx.strokeStyle = "black";
+        ctx.font = "40px Arial";
+        ctx.strokeText(Math.floor(zo(distance / 100) * 5), distancer.end.x, distancer.end.y)
+        ctx.fillText(Math.floor(zo(distance / 100) * 5), distancer.end.x, distancer.end.y)
+    }
 }
 
 function eraserLine(e) {
