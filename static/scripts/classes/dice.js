@@ -10,7 +10,7 @@ class ZPoint {
 var blah = 4;
 class D10 {
     constructor(x, y) {
-        this.stop = false;
+        this.stop = 0;
         this.up = false;
         this.x = x;
         this.y = y;
@@ -69,7 +69,7 @@ class D10 {
         this.fillColor = colorList[Math.ceil((Math.random() * colorList.length) - 1)]
     }
     newPos(lowSide, order) {
-        if (!this.stop) {
+        if (this.stop < 100) {
             if (this.up) {
                 this.gravitySpeed -= this.gravity;
                 this.x += this.speedX;
@@ -86,26 +86,33 @@ class D10 {
                 this.y += this.speedY;
                 if (this.z <= 1) {
                     this.z = 1;
-                    this.gravitySpeed = -(this.gravitySpeed * ((Math.random() * .2) + .4));
+                    this.gravitySpeed = -(this.gravitySpeed * ((Math.random() * .2) + .6));
                     this.yaw = this.yaw * .75;
                     this.speedY = (this.yaw + this.pitch) * this.gravitySpeed;
                     this.pitch = this.pitch * .75;
                     this.speedX = (this.roll + this.yaw) * this.gravitySpeed;
                     this.roll = this.roll * .75;
                     this.up = true;
-                    // console.log(this.gravitySpeed)
                     let gravDrag = (this.gravitySpeed * .5)
-                    console.log(order)
-                    console.log(this.opposites[order])
                     if (lowSide[1].z < lowSide[2].z && lowSide[1].z < lowSide[3].z && lowSide[1].z < lowSide[4].z) {
                         if (lowSide[1].z == this.points.top.z) {
                             this.speedY += (this.points.bottom.y - this.points.top.y) * gravDrag
                             this.speedX += (this.points.bottom.x - this.points.top.x) * gravDrag
-                            this.roll = (this.roll * (this.points.bottom.z - this.points.top.z) * gravDrag)
+                            var roller = (this.roll * (this.points.bottom.z - this.points.top.z))
+                            if (gravDrag) {
+                                this.roll = roller * gravDrag
+                            } else {
+                                this.roll = roller
+                            }
                         } else if (lowSide[1].z == this.points.bottom.z) {
                             this.speedX += (this.points.top.x - this.points.bottom.x) * gravDrag
                             this.speedY += (this.points.top.y - this.points.bottom.y) * gravDrag
-                            this.roll = (this.roll * (this.points.top.z - this.points.bottom.z) * gravDrag)
+                            var roller = (this.roll * (this.points.top.z - this.points.bottom.z))
+                            if (gravDrag) {
+                                this.roll = roller * gravDrag
+                            } else {
+                                this.roll = roller
+                            }
                         }
                         // this.roll *= 1.5;
                         // this.gravitySpeed *= 1gravDrag;
@@ -113,39 +120,62 @@ class D10 {
                     else if (lowSide[4].z < lowSide[2].z && lowSide[4].z < lowSide[3].z && lowSide[4].z < lowSide[1].z) {
                         this.speedY += (this.points[this.opposites[order]].y - lowSide[4].y) * gravDrag
                         this.speedX += (this.points[this.opposites[order]].x - lowSide[4].x) * gravDrag
-                        this.pitch = (this.pitch * (this.points[this.opposites[order]].z - lowSide[4].z) * gravDrag)
+                        var pitcher = (this.pitch * (this.points[this.opposites[order]].z - lowSide[4].z))
+                        if (gravDrag) {
+                            this.pitch = pitcher * gravDrag
+                        } else {
+                            this.pitch = pitcher
+                        }
                         // this.yaw *= 1.5;
                     }
                     else if (lowSide[2].z < lowSide[4].z && lowSide[2].z < lowSide[3].z && lowSide[2].z < lowSide[1].z) {
                         this.speedY += (this.points[this.opposites[order]].y - lowSide[2].y) * gravDrag
                         this.speedX += (this.points[this.opposites[order]].x - lowSide[2].x) * gravDrag
-                        this.pitch = (this.pitch * (this.points[this.opposites[order]].z - lowSide[2].z) * gravDrag)
+                        var pitcher = (this.pitch * (this.points[this.opposites[order]].z - lowSide[2].z))
+                        if (gravDrag) {
+                            this.pitch = pitcher * gravDrag
+                        } else {
+                            this.pitch = pitcher
+                        }
                         // this.pitch *= 1.5;
                     }
                     else if (lowSide[3].z < lowSide[2].z && lowSide[3].z < lowSide[4].z && lowSide[3].z < lowSide[1].z) {
                         if (lowSide[1].z == this.points.top.z) {
                             this.speedY += (this.points.bottom.y - this.points.top.y) * this.gravitySpeed
                             this.speedX += (this.points.bottom.x - this.points.top.x) * this.gravitySpeed
-                            this.roll = (this.roll * (this.points.bottom.z - this.points.top.z) * gravDrag)
+                            var roller = (this.roll * (this.points.bottom.z - this.points.top.z))
+                            if (gravDrag) {
+                                this.roll = roller * gravDrag
+                            } else {
+                                this.roll = roller
+                            }
                         } else if (lowSide[1].z == this.points.bottom.z) {
                             this.speedX += (this.points.top.x - this.points.bottom.x) * this.gravitySpeed
                             this.speedY += (this.points.top.y - this.points.bottom.y) * this.gravitySpeed
-                            this.roll = (this.roll * (this.points.top.z - this.points.bottom.z) * gravDrag)
+                            var roller = (this.roll * (this.points.top.z - this.points.bottom.z))
+                            if (gravDrag) {
+                                this.roll = roller * gravDrag
+                            } else {
+                                this.roll = roller
+                            }
                         }
                         // this.roll *= 1.5;
                     } else {
                         this.stop = true;
                     }
                 }
+                console.log(this.roll)
                 if (this.yaw + this.pitch + this.roll < .001) {
-                    // this.yaw = 0;
-                    // this.pitch = 0;
-                    // this.roll = 0;
                     this.speedY = 0;
                     this.speedX = 0;
-                    // console.log(this.yaw, this.pitch, this.roll)
+                    this.stop++;
                 }
             }
+        } else {
+
+            this.yaw = 0;
+            this.pitch = 0;
+            this.roll = 0;
         }
     }
     rotate() {
