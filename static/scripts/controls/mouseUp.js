@@ -21,12 +21,18 @@ document.addEventListener('mouseup', function (e) {
             characterUpdate(activeCharacter)
             // drawScreen()
         }
+        if (activeTile) {
+            activeTile = false;
+        }
     }
     if (e.button == 2) {
         mode = "draw"
         erasing = false;
         showEraser = false;
         rush = true;
+        if (painting) {
+            painting = false;
+        }
         // drawScreen()
     }
     if (e.button == 1) {

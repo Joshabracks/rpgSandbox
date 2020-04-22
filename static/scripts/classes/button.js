@@ -1,5 +1,5 @@
 class Button {
-    constructor(name, x, y, height, width, clickAction, color) {
+    constructor(name, x, y, width, height, clickAction, color) {
         this.name = name;
         this.x = x;
         this.y = y;

@@ -1,7 +1,6 @@
 document.onkeydown = function (e) {
     if (e.keyCode == 69) {
         if (!distancer) {
-            console.log("EEEEE")
             distancer = { center: {}, end: {} }
         }
     }

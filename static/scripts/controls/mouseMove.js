@@ -5,9 +5,29 @@ document.addEventListener('mousemove', function (e) {
         center.x = originCoord.x2 + zo(e.clientX - originCoord.x1)
         center.y = originCoord.y2 + zo(e.clientY - originCoord.y1)
         // drawScreen()
+    } else if (editMap) {
+        if (activeTile) {
+            activeTile.z = Math.abs(getY(e) - originCoord.y2);
+            if (activeTile.z < 0) {
+                activeTile.z = 0;
+            }
+        } else {
+            characters.forEach((tile) => {
+                if (tile.class == "Tile" && pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
+                    highLightTile.x = tile.x;
+                    highLightTile.y = tile.y;
+                    highLightTile.z = tile.z;
+                    if (painting) {
+                        console.log(tile);
+                        console.log(paintBrush.name)
+                        tile.tile = paintBrush.name;
+                    }
+                }
+            })
+        }
     } else if (distancer) {
-        distancer.end.x = e.clientX;
-        distancer.end.y = e.clientY;
+        distancer.end.x = zo(e.clientX);
+        distancer.end.y = zo(e.clientY);
     } else if (drawing) {
         let tempX = getX(e)
         let tempY = getY(e)
@@ -19,12 +39,15 @@ document.addEventListener('mousemove', function (e) {
         eraserLine(e)
         // drawScreen()
     } else if (mode == 'activeCharacter') {
-        if (snap) {
-            activeCharacter.x = (Math.floor((getX(e) - zo(60)) / 173) * 173) + xsize
-            activeCharacter.y = Math.floor(getY(e) / ysize) * ysize
-            if (activeCharacter.y % 100 != 50) {
+        if (snap && activeCharacter.class == "Character") {
+            activeCharacter.x = ((Math.floor(getX(e) / 173) * 173) + xsize)
+            activeCharacter.y = (Math.floor(getY(e) / ysize) * ysize)
+            if ((activeCharacter.y) % 100 != 50) {
                 activeCharacter.x -= 86.5
             }
+        } else if (activeCharacter.class == "Die") {
+            activeCharacter.x = getX(e)
+            activeCharacter.y = getY(e)
         } else {
             activeCharacter.x = getX(e) - 60
             activeCharacter.y = getY(e) - 55
@@ -37,10 +60,18 @@ document.addEventListener('mousemove', function (e) {
         let active = false;
         let tempX = getX(e);
         let tempY = getY(e);
+
         characters.forEach((character) => {
-            if (pointProx([character.x + 60, character.y + 55], [tempX, tempY]) < 60) {
-                active = true;
-                activeCharacter = character;
+            if (character.class == "Character") {
+                if (pointProx([character.x, character.y], [tempX, tempY]) < 60) {
+                    active = true;
+                    activeCharacter = character;
+                }
+            } else if (character.class == "Die") {
+                if (pointProx([character.x, character.y], [tempX, tempY]) < 60) {
+                    active = true;
+                    activeCharacter = character;
+                }
             }
         })
         if (!active) {

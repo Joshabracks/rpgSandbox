@@ -5,7 +5,7 @@ window.onresize = function () {
     // drawScreen()
 }
 window.onload = function () {
-    sortCharacters();
+    setTimeout(() => sortCharacters(), 1000)
     window.requestAnimationFrame(drawScreen);
 }
 const canvas = document.getElementById('canvas')
@@ -28,8 +28,10 @@ let drawStep = 0;
 let showEraser = false;
 let rush = true;
 let activeCharacter = false;
+let activeTile = false;
 let updateStep = Date.now()
 let snap = true
+let editMap = false;
 let showBoundingBoxes = false;
 let zoom = 1;
 let distancer = false;
@@ -38,13 +40,15 @@ let pencil = {
     width: 5
 }
 let erasing = false;
+let painting = false;
+let paintBrush = false;
 let mode = "draw";
 let eraser = {
     x: 0,
     y: 0,
     draw: () => {
         ctx.beginPath();
-        ctx.arc(z(eraser.x + center.x), z(eraser.y + center.y), z(25), 0, 2 * Math.PI)
+        ctx.arc(eraser.x + center.x, eraser.y + center.y, 25, 0, 2 * Math.PI)
         ctx.fillStyle = "pink";
         ctx.fill()
         ctx.closePath()
@@ -81,3 +85,29 @@ let xsize = 150
 let ysize = 50
 //END HEXAGON STUFF
 
+//WORLDMAPSTUFF
+let hexTileArt = [[28.866, -59.995], [-28.868, -59.995], [-57.736, -9.995], [-28.868, 40.005], [28.866, 40.005], [57.735, -9.995], [28.866, -59.995]]
+let grassTile = new TileSprite("grassTile", 0, 0, 0, hexTileArt, "#24A520", "#1A7715", "#725F11", "#3F3516");
+let waterTile = new TileSprite("waterTile", 0, 0, 0, hexTileArt, "#2162A3", "#2162A3", "#2162A3", "#2162A3");
+let sandTile = new TileSprite("sandTile", 0, 0, 0, hexTileArt, "#C1B385", "#DDDACA", "#968C60", "#7F7044");
+let stoneTile = new TileSprite("stoneTile", 0, 0, 0, hexTileArt, "#6D6C68", "#4C4B49", "#606060", "#3F3F3F");
+let lavaTile = new TileSprite("lavaTile", 0, 0, 0, hexTileArt, "#D83D00", "#F99900", "#D33C00", "#FFAA00");
+let worldMap = [];
+let y = ysize
+let x = xsize
+let even = false
+for (let row = 0; row < mapHeight; row++) {
+    for (let col = 0; col < mapWidth; col++) {
+        characters.push(new Tile(x, y, 0, "grassTile"))
+        x += 173
+    }
+    y += ysize
+    if (even) {
+        x = xsize
+        even = false
+    } else {
+        x = 63
+        even = true
+    }
+}
+//END WORLDMAPSTUFF

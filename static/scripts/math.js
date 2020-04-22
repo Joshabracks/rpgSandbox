@@ -31,7 +31,27 @@ Math.distance = function (A, B) {
 }
 
 function sortCharacters() {
-    characters.sort((a, b) => (a.y < b.y) ? -1 : 1)
+    // characters.sort((a, b) => (a.y < b.y) ? -1 : 1)
+    function quickSort(arr) {
+        if (arr.length < 2) {
+            return arr;
+        }
+        let mid = Math.floor(arr.length / 2)
+        let pivot = arr[mid];
+        let lower = [];
+        let higher = [];
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] != pivot) {
+                if (arr[i].y > pivot.y || (arr[i].y == pivot.y && arr[i].class != "tile")) {
+                    higher.push(arr[i])
+                } else {
+                    lower.push(arr[i])
+                }
+            }
+        }
+        return quickSort(lower).concat([pivot]).concat(quickSort(higher))
+    }
+    characters = quickSort(characters)
 }
 
 function boxProx(shape1, shape2) {

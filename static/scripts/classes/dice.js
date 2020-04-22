@@ -10,6 +10,7 @@ class ZPoint {
 var blah = 4;
 class D10 {
     constructor(x, y) {
+        this.class = "Die";
         this.stop = 0;
         this.up = false;
         this.x = x;
@@ -211,17 +212,43 @@ class D10 {
         }
     }
     draw() {
-        ctx.save();
+        // ctx.save();
         let order = this.sortSides();
         this.newPos(this.sides[order[0].side], order[0].side);
         this.rotate();
-        ctx.scale(z(width) / width, z(height) / height);
-        ctx.translate(center.x, center.y)
+        // ctx.scale(z(width) / width, z(height) / height);
+        // ctx.translate(center.x, center.y)
+        // for (let i = 0; i < order.length; i++) {
+        //     let side = this.sides[order[i].side];
+        //     ctx.globalAlpha = 0.25;
+        //     ctx.fillStyle = "black";
+        //     let moved = false;
+        //     ctx.save()
+        //     console.log(this.z)
+        //     if (this.z > 1.01) {
+        //         ctx.scale(this.z, this.z)
+        //     } else {
+        //         ctx.scale(1.01, 1.01)
+        //     }
+        //     ctx.beginPath();
+        //     for (let j = 1; j < 5; j++) {
+        //         if (moved) {
+        //             ctx.moveTo((side[j].x * this.z) + this.x + center.x, (side[j].y * this.z) + this.y + center.y);
+        //             moved = false;
+        //         } else {
+        //             ctx.lineTo((side[j].x * this.z) + this.x + center.x, (side[j].y * this.z) + this.y + center.y);
+        //         }
+        //     }
+        //     ctx.closePath()
+        //     ctx.fill()
+        //     ctx.restore()
+        // }
         for (let i = 0; i < order.length; i++) {
+            let side = this.sides[order[i].side];
             if (i == 6) {
                 ctx.save()
                 ctx.globalAlpha = 1;
-                ctx.translate(this.x, this.y);
+                ctx.translate(this.x + center.x, this.y + center.y);
                 ctx.rotate(this.yaw * 100);
                 ctx.font = (40 * this.z) + "px Arial";
                 ctx.textAlign = "center"
@@ -238,17 +265,16 @@ class D10 {
                 }
                 ctx.restore()
             }
-            ctx.globalAlpha = 0.75;
-            let side = this.sides[order[i].side];
             ctx.fillStyle = this.color(side);
             ctx.beginPath()
             let moved = false;
+            ctx.globalAlpha = .75;
             for (let j = 1; j < 5; j++) {
                 if (moved) {
-                    ctx.moveTo((side[j].x * this.z) + this.x, (side[j].y * this.z) + this.y);
+                    ctx.moveTo((side[j].x * this.z) + this.x + center.x, (side[j].y * this.z) + this.y + center.y);
                     moved = false;
                 } else {
-                    ctx.lineTo((side[j].x * this.z) + this.x, (side[j].y * this.z) + this.y);
+                    ctx.lineTo((side[j].x * this.z) + this.x + center.x, (side[j].y * this.z) + this.y + center.y);
                 }
             }
             // ctx.save()
@@ -260,7 +286,7 @@ class D10 {
             // ctx.strokeText(order[5].side, 0, 10 * this.z)
             // ctx.restore()
             ctx.strokeStyle = this.outerColor;
-            ctx.lineWidth = zo(0.5)
+            ctx.lineWidth = zo(0.5 * this.z)
             ctx.closePath();
             ctx.stroke();
             ctx.fill();
@@ -269,7 +295,7 @@ class D10 {
         if (blah > 0) {
             blah--
         }
-        ctx.restore()
+        // ctx.restore()
     }
     color(side) {
         let r;

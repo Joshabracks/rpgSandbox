@@ -1,7 +1,12 @@
 document.addEventListener('wheel', function (e) {
     if (!drag) {
-        console.log(e)
-        if (e.deltaY > 0) {
+        if (activeCharacter) {
+            if (e.deltaY > 0) {
+                activeCharacter.z++
+            } else {
+                activeCharacter.z--
+            }
+        } else if (e.deltaY > 0) {
             if (zoom > 0.1) {
                 h1 = zo(canvas.clientHeight)
                 w1 = zo(canvas.clientWidth)

@@ -13,36 +13,26 @@ function startErasing(e) {
     erasing = true;
 }
 
+
 function drawScreen() {
-    ctx.fillStyle = "black"
+    // ctx.translate(center.x, center.y)
+    ctx.fillStyle = "#615f71"
     ctx.rect(0, 0, width, height)
     ctx.fill()
-    let y = ysize
-    let x = xsize
-    let even = false
-    for (let row = 0; row < mapHeight; row++) {
-        for (let col = 0; col < mapWidth; col++) {
-            hexagon.x = x;
-            hexagon.y = y;
-            hexagon.draw()
-            x += 173
-        }
-        y += ysize
-        if (even) {
-            x = xsize
-            even = false
-        } else {
-            x = 63
-            even = true
-        }
-    }
-    hexagon.x = 0;
-    hexagon.y = 0;
-    drawQ.forEach((shape) => {
-        shape.draw()
+    ctx.save()
+    ctx.scale(z(width) / width, z(height) / height);
+    worldMap.forEach((tile) => {
+        tile.draw()
     })
     characters.forEach((character) => {
-        character.drawFull()
+        if (character.drawFull) {
+            character.drawFull()
+        } else {
+            character.draw()
+        }
+    })
+    drawQ.forEach((shape) => {
+        shape.draw()
     })
     if (showEraser) {
         eraser.draw()
@@ -50,10 +40,14 @@ function drawScreen() {
     if (distancer) {
         distanceCircle()
     }
+    dice.forEach((die) => { die.draw() })
+    if (editMap) {
+        highLightTile.draw();
+    }
+    ctx.restore()
     buttons.forEach(function (button) {
         button.draw()
     })
-    dice.forEach((die) => { die.draw() })
     window.requestAnimationFrame(drawScreen)
 }
 
@@ -84,8 +78,8 @@ function distanceCircle() {
         ctx.fillStyle = "white";
         ctx.strokeStyle = "black";
         ctx.font = "40px Arial";
-        ctx.strokeText(Math.floor(zo(distance / 100) * 5), distancer.end.x, distancer.end.y)
-        ctx.fillText(Math.floor(zo(distance / 100) * 5), distancer.end.x, distancer.end.y)
+        ctx.strokeText(Math.floor(distance / 20), distancer.end.x, distancer.end.y)
+        ctx.fillText(Math.floor(distance / 20), distancer.end.x, distancer.end.y)
     }
 }
 
