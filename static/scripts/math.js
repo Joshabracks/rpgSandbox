@@ -164,3 +164,12 @@ function z(number) {
 function zo(number) {
     return number * (1 / zoom)
 }
+
+function rotate2D(centerPoint, point, angle) {
+    var radians = (Math.PI / 180) * angle,
+        cos = Math.cos(radians),
+        sin = Math.sin(radians),
+        nx = (cos * (point.x - centerPoint.x)) + (sin * (point.y - centerPoint.y)) + centerPoint.x,
+        ny = (cos * (point.y - centerPoint.y)) - (sin * (point.x - centerPoint.x)) + centerPoint.y;
+    return {x: nx, y: ny};
+}

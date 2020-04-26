@@ -16,8 +16,8 @@ canvas.height = height
 canvas.width = width
 let allFull = false;
 let roll = false;
-let mapWidth = 11;
-let mapHeight = 20;
+let mapWidth = 20;
+let mapHeight = 60;
 let center = { x: 0, y: 0 }
 let originCoord = { x1: 0, y1: 0, x2: 0, y2: 0 }
 let drag = false;
@@ -86,12 +86,8 @@ let ysize = 50
 //END HEXAGON STUFF
 
 //WORLDMAPSTUFF
-let hexTileArt = [[28.866, -59.995], [-28.868, -59.995], [-57.736, -9.995], [-28.868, 40.005], [28.866, 40.005], [57.735, -9.995], [28.866, -59.995]]
-let grassTile = new TileSprite("grassTile", 0, 0, 0, hexTileArt, "#24A520", "#1A7715", "#725F11", "#3F3516");
-let waterTile = new TileSprite("waterTile", 0, 0, 0, hexTileArt, "#2162A3", "#2162A3", "#2162A3", "#2162A3");
-let sandTile = new TileSprite("sandTile", 0, 0, 0, hexTileArt, "#C1B385", "#DDDACA", "#968C60", "#7F7044");
-let stoneTile = new TileSprite("stoneTile", 0, 0, 0, hexTileArt, "#6D6C68", "#4C4B49", "#606060", "#3F3F3F");
-let lavaTile = new TileSprite("lavaTile", 0, 0, 0, hexTileArt, "#D83D00", "#F99900", "#D33C00", "#FFAA00");
+
+
 let worldMap = [];
 let y = ysize
 let x = xsize
@@ -107,7 +103,7 @@ for (let row = 0; row < mapHeight; row++) {
         even = false
     } else {
         x = 63
-        even = true
+        even = true;
     }
 }
 //END WORLDMAPSTUFF

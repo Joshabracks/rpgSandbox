@@ -11,7 +11,8 @@ let buttons = [
                 snap = true;
             }
         },
-        "slategrey"
+        "slategrey",
+        "black"
     ),
     new Button("Edit Map",
         170,
@@ -27,7 +28,8 @@ let buttons = [
                 addSwatches()
             }
         },
-        "darkslategrey"
+        "darkslategrey",
+        "black"
     )
 ]
 
@@ -36,14 +38,15 @@ function addSwatches() {
     for (let i = 0; i < tilesWheel.length; i++) {
         let tile = tiles[tilesWheel[i]];
         buttons.push(new Button("",
-            i * 50,
-            30,
+            i * 52,
+            32,
             50,
             50,
             () => {
                 paintBrush = tile;
             },
-            tile.topColor
+            tile.topColor,
+            tile.topOutline
         ))
     }
 }
