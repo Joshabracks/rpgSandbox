@@ -21,7 +21,8 @@ document.addEventListener('mousedown', function (e) {
             distancer.center.x = zo(e.clientX);
             distancer.center.y = zo(e.clientY);
         } else if (roll) {
-            characters.push(new D10(getX(e), getY(e)))
+            
+            dice.push(new D10(getX(e), getY(e)))
         } else if (activeCharacter) {
             if (!activeCharacter.lock || Date.now() - activeCharacter.lock > 1000) {
                 mode = 'activeCharacter';
@@ -63,13 +64,14 @@ document.addEventListener('mousedown', function (e) {
             // }
             // activeTile = false;
         } else if (roll) {
-            let temp = []
-            characters.forEach((character) => {
-                if (character.class != "Die") {
-                    temp.push(character);
-                }
-                characters = temp;
-            })
+            dice = [];
+            // let temp = []
+            // dice.forEach((character) => {
+            //     if (character.class != "Die") {
+            //         temp.push(character);
+            //     }
+            //     dice = temp;
+            // })
         } else if (activeCharacter) {
             activeCharacter.direction++;
             if (activeCharacter.direction > 6) {

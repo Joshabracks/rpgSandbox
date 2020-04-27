@@ -110,6 +110,9 @@ class HexTile {
         this.characters = [];
     }
     draw() {
+        this.sprite.x = this.x;
+        this.sprite.y = this.y;
+        this.sprite.z = this.z;
         this.sprite.draw();
         this.characters.forEach((character => {
             character.draw()

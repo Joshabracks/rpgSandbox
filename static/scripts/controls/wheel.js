@@ -7,7 +7,7 @@ document.addEventListener('wheel', function (e) {
                 activeCharacter.z--
             }
         } else if (e.deltaY > 0) {
-            if (zoom > 0.1) {
+            if (zoom > 0.25) {
                 h1 = zo(canvas.clientHeight)
                 w1 = zo(canvas.clientWidth)
                 zoom *= .95
@@ -19,7 +19,7 @@ document.addEventListener('wheel', function (e) {
                 // drawScreen()
             }
         } else {
-            if (zoom < 10) {
+            if (zoom < 2) {
                 h1 = zo(canvas.clientHeight)
                 w1 = zo(canvas.clientWidth)
                 zoom *= 1.05

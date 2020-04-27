@@ -21,16 +21,17 @@ function drawScreen() {
     ctx.fill()
     ctx.save()
     ctx.scale(z(width) / width, z(height) / height);
-    worldMap.forEach((tile) => {
-        tile.draw()
-    })
-    characters.forEach((character) => {
-        if (character.drawFull) {
-            character.drawFull()
-        } else {
-            character.draw()
-        }
-    })
+    map.draw();
+    // worldMap.forEach((tile) => {
+    //     tile.draw()
+    // })
+    // characters.forEach((character) => {
+    //     if (character.drawFull) {
+    //         character.drawFull()
+    //     } else {
+    //         character.draw()
+    //     }
+    // })
     drawQ.forEach((shape) => {
         shape.draw()
     })

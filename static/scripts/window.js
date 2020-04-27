@@ -1,11 +1,11 @@
 
 window.onresize = function () {
     fitCanvas()
-    rush = true;
+    // rush = true;
     // drawScreen()
 }
 window.onload = function () {
-    setTimeout(() => sortCharacters(), 1000)
+    // setTimeout(() => sortCharacters(), 1000)
     window.requestAnimationFrame(drawScreen);
 }
 const canvas = document.getElementById('canvas')
@@ -87,23 +87,24 @@ let ysize = 50
 
 //WORLDMAPSTUFF
 
+let map = new HexMap(30, 60, "grassTile");
 
-let worldMap = [];
-let y = ysize
-let x = xsize
-let even = false
-for (let row = 0; row < mapHeight; row++) {
-    for (let col = 0; col < mapWidth; col++) {
-        characters.push(new Tile(x, y, 0, "grassTile"))
-        x += 173
-    }
-    y += ysize
-    if (even) {
-        x = xsize
-        even = false
-    } else {
-        x = 63
-        even = true;
-    }
-}
+// let worldMap = [];
+// let y = ysize
+// let x = xsize
+// let even = false
+// for (let row = 0; row < mapHeight; row++) {
+//     for (let col = 0; col < mapWidth; col++) {
+//         characters.push(new Tile(x, y, 0, "grassTile"))
+//         x += 173
+//     }
+//     y += ysize
+//     if (even) {
+//         x = xsize
+//         even = false
+//     } else {
+//         x = 63
+//         even = true;
+//     }
+// }
 //END WORLDMAPSTUFF

@@ -11,12 +11,12 @@ class HexMap {
                 this.world[i][j] = new HexTile(tileType, 0, 0, 0, 1);
             }
         }
-        for (let i = 1; i <= this.height; i++) {
-            this.world[i] = {};
-            for (let j = 1; j <= this.width; j++) {
-                this.world[i][j] = {};
-            }
-        }
+        // for (let i = 1; i <= this.height; i++) {
+        //     this.world[i] = {};
+        //     for (let j = 1; j <= this.width; j++) {
+        //         this.world[i][j] = {};
+        //     }
+        // }
         this.orientation = 1;
         this.orderWorld()
         this.originalWorld = JSON.parse(JSON.stringify(this.world));
@@ -24,19 +24,19 @@ class HexMap {
         let bx = this.originalWorld[2][this.width].x;
         let ty = this.originalWorld[1][1].y;
         let by = this.originalWorld[this.height][1].y;
-        this.pivot = { x: Math.mean([tx, bx]), y: Math.mean(ty, by) };
+        this.pivot = { x: Math.mean([tx, bx]), y: Math.mean([ty, by]) };
     }
     orderWorld() {
         //assigns x/y coords to tiles
         if (this.orientation == 1) {
             for (let h = 1; h <= this.height; h++) {
                 for (let w = 1; w <= this.width; w++) {
-                    if (h % 2 != 0) {
-                        this.world[h][w].y = 110 * h;
-                        this.world[h][w].x = 180 * w;
+                    if (w % 2 != 0) {
+                        this.world[h][w].y = (110 * h);
+                        this.world[h][w].x = (90 * w);
                     } else {
-                        this.world[h][w].y = (110 * h) + 55;
-                        this.world[h][w].x = (180 * w) - 60;
+                        this.world[h][w].y = (110 * h) - 55;
+                        this.world[h][w].x = (90 * w);
                     }
                 }
             }
@@ -60,7 +60,10 @@ class HexMap {
         if (this.orientation == 1) {
             for (let h = 1; h <= this.height; h++) {
                 for (let w = 1; w <= this.width; w++) {
-                    this.world[h][w].draw();
+                    let tile = this.world[h][w];
+                    // if (tile.x > zo(-180)  && tile.x < zo(canvas.width + center.x + 180)  && tile.y > zo(-110)  && tile.y < zo(canvas.height + 110 + center.y) ) {
+                        tile.draw();
+                    // }
                 }
             }
         } else if (this.orientation == 2) {
