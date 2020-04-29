@@ -3,9 +3,7 @@ document.addEventListener('mousedown', function (e) {
     if (e.button == 0) {
         let button = buttonProx(e);
         if (button) {
-            // console.log('clicking', button.name)
             button.click()
-            // drawScreen()
         } else if (editMap) {
             map.drawIndex.forEach((idx) => {
                 let tile = map.world[idx[0]][idx[1]];

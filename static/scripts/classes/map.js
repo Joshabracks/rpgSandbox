@@ -65,19 +65,28 @@ class HexMap {
         }
         return this.sortDrawOrder(lower).concat([pivot]).concat(this.sortDrawOrder(higher))
     }
-    rotateWorld() {
-        if (this.orientation == 1) {
-            this.orderWorld();
-        } else {
-            let angle = this.orientation * 60;
-            for (let h = 1; h <= this.height; h++) {
-                for (let w = 1; w <= this.width; w++) {
-                    let newCoord = rotate2D(this.pivot, this.world[h][w], angle);
-                    this.world[h][w].x = newCoord.x;
-                    this.world[h][w].y = newCoord.y;
-                }
-            }
-        }
+    // rotateWorld() {
+    //     if (this.orientation == 1) {
+    //         this.orderWorld();
+    //     } else {
+    //         let angle = this.orientation * 60;
+    //         for (let h = 1; h <= this.height; h++) {
+    //             for (let w = 1; w <= this.width; w++) {
+    //                 let newCoord = rotate2D(this.pivot, this.world[h][w], angle);
+    //                 this.world[h][w].x = newCoord.x;
+    //                 this.world[h][w].y = newCoord.y;
+    //             }
+    //         }
+    //     }
+    // }
+    rotate() {
+        let angle = this.orientation * 60;
+        this.drawIndex.forEach((idx) => {
+            let newPoint = rotate2D(this.pivot, this.originalWorld[idx[0]][idx[1]], angle);
+            this.world[idx[0]][idx[1]].x = newPoint.x;
+            this.world[idx[0]][idx[1]].y = newPoint.y;
+        })
+        this.drawIndex = this.sortDrawOrder(this.drawIndex);
     }
     draw() {
         for (let i = 0; i < this.drawIndex.length; i++) {

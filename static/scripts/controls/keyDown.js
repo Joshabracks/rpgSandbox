@@ -22,6 +22,20 @@ document.onkeydown = function (e) {
     if (e.keyCode == 82) {
         roll = true;
     }
+    if (e.key == "ArrowRight") {
+        map.orientation ++;
+        if (map.orientation > 6) {
+            map.orientation = 0;
+        }
+        map.rotate();
+    }
+    if (e.key == "ArrowLeft") {
+        map.orientation --;
+        if (map.orientation < 0) {
+            map.orientation = 6;
+        }
+        map.rotate();
+    }
     // if (e.key = "Delete") {
     //     let ts = activeCharacter.id
     //     let temp = []
