@@ -1,5 +1,5 @@
-const scripts = [
-    'scripts/socket.js',
+let scripts = [
+    "/socket/socket.io.js",
     'scripts/math.js',
     'scripts/classes/point.js',
     'scripts/classes/line.js',
@@ -12,6 +12,7 @@ const scripts = [
     'scripts/classes/dice.js',
     'scripts/draw.js',
     'scripts/window.js',
+    'scripts/socket.js',
     'scripts/buttons.js',
     'scripts/controls/contextMenu.js',
     'scripts/controls/keyDown.js',
@@ -21,8 +22,23 @@ const scripts = [
     'scripts/controls/mouseMove.js',
     'scripts/controls/wheel.js'
 ]
-scripts.forEach((script) => {
-    var _script = document.createElement('script');
-    _script.setAttribute('src', script);
-    document.body.appendChild(_script);
-})
+
+function scriptLoader(int, el) {
+    if (scripts[int] != undefined ) {
+        var script = scripts[int];
+        var _script = document.createElement('script');
+        _script.setAttribute('src', script);
+        _script.setAttribute('onload', "scriptLoader(" + (int + 1) + ", this)");
+        document.body.appendChild(_script);
+    } else {
+        let master = document.getElementById("master");
+        master.remove();
+        scripts = false;
+        scriptLoader = false;
+    }
+    if (el) {
+        el.remove();
+    }
+}
+
+scriptLoader(0);

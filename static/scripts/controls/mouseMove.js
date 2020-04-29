@@ -7,20 +7,19 @@ document.addEventListener('mousemove', function (e) {
         // drawScreen()
     } else if (editMap) {
         if (activeTile) {
-            activeTile.z = Math.abs(getY(e) - originCoord.y2);
+            activeTile.z = Math.abs(getY(e) - originCoord.y2 - originCoord.z);
             if (activeTile.z < 0) {
                 activeTile.z = 0;
             }
         } else {
-            characters.forEach((tile) => {
-                if (tile.class == "Tile" && pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
+            map.drawIndex.forEach((idx) => {
+                var tile = map.world[idx[0]][idx[1]];
+                if (pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
                     highLightTile.x = tile.x;
                     highLightTile.y = tile.y;
                     highLightTile.z = tile.z;
                     if (painting) {
-                        console.log(tile);
-                        console.log(paintBrush.name)
-                        tile.tile = paintBrush.name;
+                        tile.sprite = tiles[paintBrush.name];
                     }
                 }
             })

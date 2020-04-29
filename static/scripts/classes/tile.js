@@ -24,19 +24,19 @@ class TileSprite {
         ctx.strokeStyle = this.bottomOutline;
         ctx.lineWidth = 4;
         ctx.beginPath()
-        ctx.moveTo(this.bottomTile[0][0] + this.x + center.x, this.bottomTile[0][1] + this.y + center.y);
-        ctx.lineTo(this.bottomTile[1][0] + this.x + center.x, this.bottomTile[1][1] + this.y + center.y);
-        ctx.lineTo(this.bottomTile[2][0] + this.x + center.x, this.bottomTile[2][1] + this.y + center.y);
-        ctx.lineTo(this.bottomTile[3][0] + this.x + center.x, this.bottomTile[3][1] + this.y + center.y - this.z);
-        ctx.lineTo(this.bottomTile[4][0] + this.x + center.x, this.bottomTile[4][1] + this.y + center.y - this.z);
-        ctx.lineTo(this.bottomTile[5][0] + this.x + center.x, this.bottomTile[5][1] + this.y + center.y);
-        ctx.lineTo(this.bottomTile[6][0] + this.x + center.x, this.bottomTile[6][1] + this.y + center.y);
-        ctx.lineTo(this.bottomTile[7][0] + this.x + center.x, this.bottomTile[7][1] + this.y + center.y);
+        ctx.moveTo(Math.floor(this.bottomTile[0][0] + this.x + center.x), Math.floor(this.bottomTile[0][1] + this.y + center.y));
+        ctx.lineTo(Math.floor(this.bottomTile[1][0] + this.x + center.x), Math.floor(this.bottomTile[1][1] + this.y + center.y));
+        ctx.lineTo(Math.floor(this.bottomTile[2][0] + this.x + center.x), Math.floor(this.bottomTile[2][1] + this.y + center.y));
+        ctx.lineTo(Math.floor(this.bottomTile[3][0] + this.x + center.x), Math.floor(this.bottomTile[3][1] + this.y + center.y - this.z));
+        ctx.lineTo(Math.floor(this.bottomTile[4][0] + this.x + center.x), Math.floor(this.bottomTile[4][1] + this.y + center.y - this.z));
+        ctx.lineTo(Math.floor(this.bottomTile[5][0] + this.x + center.x), Math.floor(this.bottomTile[5][1] + this.y + center.y));
+        ctx.lineTo(Math.floor(this.bottomTile[6][0] + this.x + center.x), Math.floor(this.bottomTile[6][1] + this.y + center.y));
+        ctx.lineTo(Math.floor(this.bottomTile[7][0] + this.x + center.x), Math.floor(this.bottomTile[7][1] + this.y + center.y));
         ctx.stroke();
         ctx.fill();
         ctx.closePath();
-        ctx.strokeRect(-30 + center.x + this.x, -0 - this.z + center.y + this.y, 60, 65 + this.z);
-        ctx.fillRect(-30 + center.x + this.x, -0 - this.z + center.y + this.y, 60, 65 + this.z);
+        ctx.lineWidth = 2;
+        ctx.strokeRect(Math.floor(-30 + center.x + this.x), Math.floor(-this.z + center.y + this.y), 60, Math.floor(50 + this.z));
         ctx.beginPath();
         ctx.moveTo(this.topTile[0][0] + this.x + center.x, this.topTile[0][1] + this.y + center.y - this.z);
         for (let i = 1; i < this.topTile.length; i++) {
@@ -101,7 +101,7 @@ class HighLightTile {
 
 class HexTile {
     constructor(TileSprite, x, y, z, orientation) {
-        this.class = "HexTile";
+        this.class = "Tile";
         this.sprite = tiles[TileSprite];
         this.x = x;
         this.y = y;

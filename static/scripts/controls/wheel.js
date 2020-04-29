@@ -22,7 +22,7 @@ document.addEventListener('wheel', function (e) {
             if (zoom < 2) {
                 h1 = zo(canvas.clientHeight)
                 w1 = zo(canvas.clientWidth)
-                zoom *= 1.05
+                zoom *= 1.05;
                 h2 = h1 - zo(canvas.clientHeight)
                 w2 = w1 - zo(canvas.clientWidth)
                 center.y -= h2 / 2;

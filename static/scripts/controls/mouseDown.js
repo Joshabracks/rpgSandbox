@@ -7,12 +7,13 @@ document.addEventListener('mousedown', function (e) {
             button.click()
             // drawScreen()
         } else if (editMap) {
-            characters.forEach((tile) => {
+            map.drawIndex.forEach((idx) => {
+                let tile = map.world[idx[0]][idx[1]];
                 if (tile.class == "Tile" && pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
-                    console.log(tile)
                     activeTile = tile;
                     originCoord.x1 = zo(clientLoc.x)
                     originCoord.y1 = zo(clientLoc.y)
+                    originCoord.z = tile.z
                     originCoord.x2 = tile.x
                     originCoord.y2 = tile.y
                 }
