@@ -1,7 +1,19 @@
 let tiles = {};
 let tilesWheel = []
-let hexTileArt = [[30, -55], [-30, -55], [-60, 0], [-30, 55], [30, 55], [60, 0], [30, -55]];
+// let hexTileArt = [[30, -55], [-30, -55], [-60, 0], [-30, 55], [30, 55], [60, 0], [30, -55]];
+let hexTileArt = [];
 // let hexTileArt = [[28.866, -59.995], [-28.868, -59.995], [-57.736, -9.995], [-28.868, 40.005], [28.866, 40.005], [57.735, -9.995], [28.866, -59.995]];
+
+var side = 0,
+    size = 61,
+    x = 0,
+    y = 0;
+
+hexTileArt.push([Math.floor(x + size * Math.cos(0)), Math.floor(y + size * Math.sin(0))]);
+
+for (side; side < 7; side++) {
+  hexTileArt.push([Math.floor(x + size * Math.cos(side * 2 * Math.PI / 6)), Math.floor(y + size * Math.sin(side * 2 * Math.PI / 6))]);
+}
 
 class TileSprite {
     constructor(name, x, y, z, topTile, topColor, topOutline, bottomColor, bottomOutline) {

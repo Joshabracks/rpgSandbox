@@ -36,11 +36,11 @@ class HexMap {
             for (let h = 1; h <= this.height; h++) {
                 for (let w = 1; w <= this.width; w++) {
                     if (w % 2 != 0) {
-                        this.world[h][w].y = (110 * h);
-                        this.world[h][w].x = (90 * w);
+                        this.world[h][w].y = (106 * h);
+                        this.world[h][w].x = (92 * w);
                     } else {
-                        this.world[h][w].y = (110 * h) - 55;
-                        this.world[h][w].x = (90 * w);
+                        this.world[h][w].y = (106 * h) - 53;
+                        this.world[h][w].x = (92 * w);
                     }
                 }
             }

@@ -22,7 +22,6 @@ let scripts = [
     'scripts/controls/mouseMove.js',
     'scripts/controls/wheel.js'
 ]
-
 function scriptLoader(int, el) {
     if (scripts[int] != undefined ) {
         var script = scripts[int];
