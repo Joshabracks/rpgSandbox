@@ -5,6 +5,7 @@ class Tree01 {
         this.height = height;
         this.width = width;
         this.class = "Environment";
+        this.leavesColor = "rgb(" + ((Math.random() * 100)) + "," + ((Math.random() * 100) + 100) + "," + ((Math.random() * 100)) + ")";
         this.trunkArt = [
             () => { ctx.moveTo(z(-this.width + this.parent.x + center.x), z(0 + this.parent.y + center.y - this.parent.z)) },
             () => { ctx.bezierCurveTo(z(-this.width + this.parent.x + center.x), z(15 + this.parent.y + center.y - this.parent.z), z(this.width + this.parent.x + center.x), z(15 + this.parent.y + center.y - this.parent.z), z(this.width + this.parent.x + center.x), z(0 + this.parent.y + center.y - this.parent.z)) },
@@ -35,7 +36,7 @@ class Tree01 {
     }
     draw() {
         ctx.fillStyle = "#603813";
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "#034928";
         ctx.strokeWidth = z(2);
         ctx.beginPath();
         this.trunkArt.forEach((fn) => { fn() })
@@ -43,14 +44,14 @@ class Tree01 {
         // ctx.stroke();
         ctx.fill();
         ctx.beginPath();
-        ctx.fillStyle = "#006738";
+        ctx.fillStyle = this.leavesColor;
         ctx.moveTo(z(this.canopyPoints[0].x + this.parent.x + center.x), z(this.canopyPoints[0].y + this.parent.y - this.height - this.parent.z + center.y));
         for (let i = 1; i < this.canopyPoints.length; i++) {
             ctx.bezierCurveTo(z(this.canopyPoints[i - 1].bx + this.parent.x + center.x), z(this.canopyPoints[i - 1].by + this.parent.y - this.height - this.parent.z + center.y), z(this.canopyPoints[i].bx + this.parent.x + center.x), z(this.canopyPoints[i].by + this.parent.y - this.height - this.parent.z + center.y), z(this.canopyPoints[i].x + this.parent.x + center.x), z(this.canopyPoints[i].y + this.parent.y - this.height - this.parent.z + center.y));
         }
 
         ctx.closePath();
-        // ctx.stroke();
+        ctx.stroke();
         ctx.fill();
     }
 }
