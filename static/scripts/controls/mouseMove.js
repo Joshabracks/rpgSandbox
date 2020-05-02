@@ -15,11 +15,16 @@ document.addEventListener('mousemove', function (e) {
             map.drawIndex.forEach((idx) => {
                 var tile = map.world[idx[0]][idx[1]];
                 if (pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
+                    hilightedTile = tile;
                     highLightTile.x = tile.x;
                     highLightTile.y = tile.y;
                     highLightTile.z = tile.z;
                     if (painting) {
-                        tile.sprite = tiles[paintBrush.name];
+                        if (paintBrush.name == "Tree") {
+                            
+                        } else {
+                            hilightedTile.sprite = tiles[paintBrush.name];
+                        }
                     }
                 }
             })

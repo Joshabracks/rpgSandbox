@@ -9,7 +9,7 @@ window.onload = function () {
     window.requestAnimationFrame(drawScreen);
 }
 const canvas = document.getElementById('canvas')
-const ctx = canvas.getContext('2d')
+const ctx = canvas.getContext('2d', {alpha: false, desynchronized: true})
 let width = window.innerWidth
 let height = window.innerHeight
 canvas.height = height
@@ -43,6 +43,7 @@ let erasing = false;
 let painting = false;
 let paintBrush = false;
 let mode = "draw";
+let hilightedTile;
 let eraser = {
     x: 0,
     y: 0,
@@ -87,7 +88,7 @@ let ysize = 50
 
 //WORLDMAPSTUFF
 
-let map = new HexMap(30, 60, "grassTile");
+let map = new HexMap(50, 100, "grassTile");
 
 // let worldMap = [];
 // let y = ysize

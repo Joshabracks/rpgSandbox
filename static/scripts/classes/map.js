@@ -9,7 +9,7 @@ class HexMap {
         for (let i = 1; i <= height; i++) {
             this.world[i] = [];
             for (let j = 1; j <= width; j++) {
-                this.world[i][j] = new HexTile(tileType, 0, 0, 200, 1);
+                this.world[i][j] = new HexTile(tileType, 0, 0, 0, 1);
                 this.drawIndex.push([i, j]);
             }
         }
@@ -90,7 +90,10 @@ class HexMap {
     }
     draw() {
         for (let i = 0; i < this.drawIndex.length; i++) {
-            this.world[this.drawIndex[i][0]][this.drawIndex[i][1]].draw();
+            let tile = this.world[this.drawIndex[i][0]][this.drawIndex[i][1]];
+            if (z(tile.x + center.x) > -200 && z(tile.y + center.y) > -200 && z(tile.x + center.x) < width + 200 && z(tile.y + center.y - tile.z) < height + 200) {
+                tile.draw();
+            }
         }
         // if (this.orientation == 1) {
         //     for (let h = 1; h <= this.height; h++) {

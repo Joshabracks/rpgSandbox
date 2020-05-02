@@ -18,9 +18,7 @@ function drawScreen() {
     // ctx.translate(center.x, center.y)
     ctx.fillStyle = "#615f71"
     ctx.rect(0, 0, width, height)
-    ctx.fill()
-    ctx.save()
-    ctx.scale(z(width) / width, z(height) / height);
+    ctx.fill();
     map.draw();
     // worldMap.forEach((tile) => {
     //     tile.draw()
@@ -41,10 +39,12 @@ function drawScreen() {
     if (distancer) {
         distanceCircle()
     }
-    dice.forEach((die) => { die.draw() })
     if (editMap) {
         highLightTile.draw();
     }
+    ctx.save()
+    ctx.scale(z(width) / width, z(height) / height);
+    dice.forEach((die) => { die.draw() })
     ctx.restore()
     buttons.forEach(function (button) {
         button.draw()

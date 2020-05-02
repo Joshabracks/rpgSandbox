@@ -20,7 +20,7 @@ document.addEventListener('mousedown', function (e) {
             distancer.center.x = zo(e.clientX);
             distancer.center.y = zo(e.clientY);
         } else if (roll) {
-            
+
             dice.push(new D10(getX(e), getY(e)))
         } else if (activeCharacter) {
             if (!activeCharacter.lock || Date.now() - activeCharacter.lock > 1000) {
@@ -40,6 +40,16 @@ document.addEventListener('mousedown', function (e) {
     if (e.button == 2) {
         if (editMap) {
             painting = true;
+            if (paintBrush.class != "TileSprite") {
+                console.log("TREEEEEEEEE")
+                let tree = new Tree01(hilightedTile, 300 + (Math.random() * 300), (Math.random() * 20) + 20)
+                // console.log(tree)
+                // console.log(hilightedTile)
+                hilightedTile.characters[0] = tree;
+            } else {
+                console.log("NOT TREEEEEE")
+                hilightedTile.sprite = tiles[paintBrush.name];
+            }
             // characters.forEach((tile) => {
             //     if (tile.class == "Tile" && pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
             //         activeTile = tile;

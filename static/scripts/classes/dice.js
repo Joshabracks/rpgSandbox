@@ -245,30 +245,30 @@ class D10 {
         // }
         for (let i = 0; i < order.length; i++) {
             let side = this.sides[order[i].side];
-            if (i == 6) {
-                ctx.save()
-                ctx.globalAlpha = 1;
-                ctx.translate(this.x + center.x, this.y + center.y);
-                ctx.rotate(this.yaw * 100);
-                ctx.font = (40 * this.z) + "px Arial";
-                ctx.textAlign = "center"
-                ctx.fillStyle = this.innerColor;
-                ctx.fillText(order[5].side, 0, 10 * this.z)
-                if (order[5].side == 9 || order[5].side == 6) {
-                    ctx.beginPath()
-                    ctx.moveTo(-10 * this.z, 20 * this.z)
-                    ctx.lineTo(10 * this.z, 20 * this.z)
-                    ctx.strokeStyle = this.innerColor;
-                    ctx.lineWidth = 4 * this.z;
-                    ctx.closePath()
-                    ctx.stroke()
-                }
-                ctx.restore()
-            }
+            // if (i == 6) {
+            //     ctx.save()
+            //     ctx.globalAlpha = 1;
+            //     ctx.translate(this.x + center.x, this.y + center.y);
+            //     ctx.rotate(this.yaw * 100);
+            //     ctx.font = (40 * this.z) + "px Arial";
+            //     ctx.textAlign = "center"
+            //     ctx.fillStyle = this.innerColor;
+            //     ctx.fillText(order[5].side, 0, 10 * this.z)
+            //     if (order[5].side == 9 || order[5].side == 6) {
+            //         ctx.beginPath()
+            //         ctx.moveTo(-10 * this.z, 20 * this.z)
+            //         ctx.lineTo(10 * this.z, 20 * this.z)
+            //         ctx.strokeStyle = this.innerColor;
+            //         ctx.lineWidth = 4 * this.z;
+            //         ctx.closePath()
+            //         ctx.stroke()
+            //     }
+            //     ctx.restore()
+            // }
             ctx.fillStyle = this.color(side);
             ctx.beginPath()
             let moved = false;
-            ctx.globalAlpha = .75;
+            // ctx.globalAlpha = .75;
             for (let j = 1; j < 5; j++) {
                 if (moved) {
                     ctx.moveTo((side[j].x * this.z) + this.x + center.x, (side[j].y * this.z) + this.y + center.y);
@@ -296,6 +296,26 @@ class D10 {
             blah--
         }
         // ctx.restore()
+        // if (i == 6) {
+        ctx.save()
+        // ctx.globalAlpha = 1;
+        ctx.translate(this.x + center.x, this.y + center.y);
+        ctx.rotate(this.yaw * 100);
+        ctx.font = (40 * this.z) + "px Arial";
+        ctx.textAlign = "center"
+        ctx.fillStyle = this.innerColor;
+        ctx.fillText(order[5].side, 0, 10 * this.z)
+        if (order[5].side == 9 || order[5].side == 6) {
+            ctx.beginPath()
+            ctx.moveTo(-10 * this.z, 20 * this.z)
+            ctx.lineTo(10 * this.z, 20 * this.z)
+            ctx.strokeStyle = this.innerColor;
+            ctx.lineWidth = 4 * this.z;
+            ctx.closePath()
+            ctx.stroke()
+        }
+        ctx.restore()
+        // }
     }
     color(side) {
         let r;

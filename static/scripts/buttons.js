@@ -48,7 +48,19 @@ function addSwatches() {
             tile.topColor,
             tile.topOutline
         ))
+        paintBrush = tile;
     }
+    buttons.push(new Button("Tree",
+    0,
+    83,
+    100,
+    50,
+    () => {
+        paintBrush = {name: "Tree"};
+    },
+    "#006738",
+    "#603813"
+    ))
 }
 
 function removeSwatches() {

@@ -15,8 +15,6 @@ document.addEventListener('wheel', function (e) {
                 w2 = w1 - zo(canvas.clientWidth)
                 center.y -= h2 / 2;
                 center.x -= w2 / 2;
-                rush = true;
-                // drawScreen()
             }
         } else {
             if (zoom < 2) {
@@ -27,8 +25,6 @@ document.addEventListener('wheel', function (e) {
                 w2 = w1 - zo(canvas.clientWidth)
                 center.y -= h2 / 2;
                 center.x -= w2 / 2;
-                rush = true;
-                // drawScreen()
             }
         }
     }
