@@ -150,6 +150,7 @@ class HexTile {
 
 
 let grassTile = new TileSprite("grassTile", 0, 0, 0, hexTileArt, "#24A520", "#1A7715", "#725F11", "#3F3516");
+let dirtTile = new TileSprite("dirtTile", 0, 0, 0, hexTileArt, "#725F11", "#3F3516", "#725F11", "#3F3516");
 let waterTile = new TileSprite("waterTile", 0, 0, 0, hexTileArt, "#2162A3", "#5353F9", "#2162A3", "#5353F9");
 let sandTile = new TileSprite("sandTile", 0, 0, 0, hexTileArt, "#C1B385", "#DDDACA", "#968C60", "#7F7044");
 let stoneTile = new TileSprite("stoneTile", 0, 0, 0, hexTileArt, "#6D6C68", "#4C4B49", "#606060", "#3F3F3F");

@@ -13,12 +13,6 @@ class HexMap {
                 this.drawIndex.push([i, j]);
             }
         }
-        // for (let i = 1; i <= this.height; i++) {
-        //     this.world[i] = {};
-        //     for (let j = 1; j <= this.width; j++) {
-        //         this.world[i][j] = {};
-        //     }
-        // }
         this.angle = 0;
         this.orientation = 1;
         this.orderWorld()
@@ -82,16 +76,17 @@ class HexMap {
     rotate() {
         let angle = this.orientation * 60;
         this.drawIndex.forEach((idx) => {
-            let newPoint = rotate2D(this.pivot, this.originalWorld[idx[0]][idx[1]], angle);
+            let newPoint = rotate2D({x: getX({clientX: width/2}), y: getY({clientY: height/2})}, this.originalWorld[idx[0]][idx[1]], angle);
             this.world[idx[0]][idx[1]].x = newPoint.x;
             this.world[idx[0]][idx[1]].y = newPoint.y;
         })
         this.drawIndex = this.sortDrawOrder(this.drawIndex);
+        // center = rotate2D(this.pivot, {x: center.x + (width / 2), y: center.y + (height / 2)}, angle)
     }
     draw() {
         for (let i = 0; i < this.drawIndex.length; i++) {
             let tile = this.world[this.drawIndex[i][0]][this.drawIndex[i][1]];
-            if (z(tile.x + center.x) > -200 && z(tile.y + center.y) > -200 && z(tile.x + center.x) < width + 200 && z(tile.y + center.y - tile.z) < height + 200) {
+            if (z(tile.x + center.x) > -1000 && z(tile.y + center.y) > -1000 && z(tile.x + center.x) < width + 1000 && z(tile.y + center.y - tile.z) < height + 1000) {
                 tile.draw();
             }
         }

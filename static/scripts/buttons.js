@@ -66,7 +66,7 @@ function addSwatches() {
 function removeSwatches() {
     let temp = [];
     buttons.forEach((button) => {
-        if (button.name != "") {
+        if (button.name != "" && button.name != "Tree") {
             temp.push(button)
         }
     })
