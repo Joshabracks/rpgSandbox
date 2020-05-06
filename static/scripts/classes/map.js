@@ -5,7 +5,7 @@ class HexMap {
         // this.size = size;
         this.world = [[new HexTile(tileType, 0, 0, 0, 1)]];
         console.log(this.world)
-        this.drawIndex = [[0,0]];
+        this.drawIndex = [[0, 0]];
         for (let i = 1; i < size; i++) {
             this.world[i] = [];
             for (let j = 0; j < i * 6; j++) {
@@ -18,7 +18,7 @@ class HexMap {
         this.orientation = 0;
         console.log(this.drawIndex)
         this.orderWorld()
-        console.log("DONE")
+        // console.log("DONE")
         // this.originalWorld = JSON.parse(JSON.stringify(this.world));
         // let tx = this.originalWorld[1][1].x;
         // let bx = this.originalWorld[2][this.width].x;
@@ -33,12 +33,13 @@ class HexMap {
         for (let ring = 1; ring < this.world.length; ring++) {
             let y = ring * 50;
             let x = 0;
-            let iPos = (this.orientation * ring) + 1;
+            let iPos = ((this.orientation) * ring);
             let rCount = 0;
-            let rDir = this.orientation;
-            console.log(iPos, rDir, x, y)
-            for (let i = 0; i < ring * 6; i++ ) {
-
+            let rDir = 0;
+            for (let i = 0; i < ring * 6; i++) {
+                if (iPos >= ring * 6) {
+                    iPos = 0;
+                }
                 if (rCount >= ring) {
                     rCount = 0;
                     rDir++;
@@ -68,16 +69,14 @@ class HexMap {
                     x += 75;
                     y += 25;
                 }
-                this.world[ring][iPos].x = x;
+                // console.log([ring, iPos])
                 this.world[ring][iPos].y = y;
+                this.world[ring][iPos].x = x;
                 iPos++;
-                if (iPos >= ring * 6) {
-                    iPos = 0;
-                }
                 rCount++;
             }
         }
-        this.sortDrawOrder(this.drawIndex);
+        this.drawIndex = this.sortDrawOrder(this.drawIndex);
         // if (this.orientation == 1) {
         // for (let h = 1; h <= this.height; h++) {
         //     for (let w = 1; w <= this.width; w++) {

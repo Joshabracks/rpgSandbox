@@ -34,21 +34,21 @@ class TileSprite {
     draw() {
         ctx.fillStyle = this.bottomColor;
         ctx.strokeStyle = this.bottomOutline;
-        // ctx.lineWidth = z(4);
-        // ctx.beginPath()
-        // ctx.moveTo(z(this.bottomTile[0][0] + this.x + center.x), z(this.bottomTile[0][1] + this.y + center.y));
-        // ctx.lineTo(z(this.bottomTile[1][0] + this.x + center.x), z(this.bottomTile[1][1] + this.y + center.y));
-        // ctx.lineTo(z(this.bottomTile[2][0] + this.x + center.x), z(this.bottomTile[2][1] + this.y + center.y));
-        // ctx.lineTo(z(this.bottomTile[3][0] + this.x + center.x), z(this.bottomTile[3][1] + this.y + center.y - this.z));
-        // ctx.lineTo(z(this.bottomTile[4][0] + this.x + center.x), z(this.bottomTile[4][1] + this.y + center.y - this.z));
-        // ctx.lineTo(z(this.bottomTile[5][0] + this.x + center.x), z(this.bottomTile[5][1] + this.y + center.y));
-        // ctx.lineTo(z(this.bottomTile[6][0] + this.x + center.x), z(this.bottomTile[6][1] + this.y + center.y));
-        // ctx.lineTo(z(this.bottomTile[7][0] + this.x + center.x), z(this.bottomTile[7][1] + this.y + center.y));
-        // ctx.stroke();
-        // ctx.fill();
-        // ctx.closePath();
-        // ctx.lineWidth = z(2);
-        // ctx.strokeRect(z(-30 + center.x + this.x), z(-this.z + center.y + this.y), z(60), z(50 + this.z));
+        ctx.lineWidth = z(4);
+        ctx.beginPath()
+        ctx.moveTo(z(this.bottomTile[0][0] + this.x + center.x), z(this.bottomTile[0][1] + this.y + center.y));
+        ctx.lineTo(z(this.bottomTile[1][0] + this.x + center.x), z(this.bottomTile[1][1] + this.y + center.y));
+        ctx.lineTo(z(this.bottomTile[2][0] + this.x + center.x), z(this.bottomTile[2][1] + this.y + center.y));
+        ctx.lineTo(z(this.bottomTile[3][0] + this.x + center.x), z(this.bottomTile[3][1] + this.y + center.y - this.z));
+        ctx.lineTo(z(this.bottomTile[4][0] + this.x + center.x), z(this.bottomTile[4][1] + this.y + center.y - this.z));
+        ctx.lineTo(z(this.bottomTile[5][0] + this.x + center.x), z(this.bottomTile[5][1] + this.y + center.y));
+        ctx.lineTo(z(this.bottomTile[6][0] + this.x + center.x), z(this.bottomTile[6][1] + this.y + center.y));
+        ctx.lineTo(z(this.bottomTile[7][0] + this.x + center.x), z(this.bottomTile[7][1] + this.y + center.y));
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+        ctx.lineWidth = z(2);
+        ctx.strokeRect(z(-30 + center.x + this.x), z(-this.z + center.y + this.y), z(60), z(50 + this.z));
         ctx.beginPath();
         ctx.moveTo(z(this.topTile[0][0] + this.x + center.x), z(this.topTile[0][1] + this.y + center.y - this.z));
         for (let i = 1; i < this.topTile.length; i++) {

@@ -1,5 +1,4 @@
 document.onkeyup = function (e) {
-    console.log(e.keyCode)
     if (e.keyCode == 69) {
         distancer = false
     }

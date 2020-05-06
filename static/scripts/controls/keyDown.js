@@ -1,4 +1,5 @@
-document.onkeydown = function (e) {
+
+document.onkeydown = async function (e) {
     if (e.keyCode == 69) {
         if (!distancer) {
             distancer = { center: {}, end: {} }
@@ -22,19 +23,27 @@ document.onkeydown = function (e) {
     if (e.keyCode == 82) {
         roll = true;
     }
-    if (e.key == "ArrowLeft") {
-        map.orientation ++;
+    if (e.key == "ArrowRight") {
+        let idx = centerTile();
+        console.log(idx)
+        map.orientation++;
         if (map.orientation > 5) {
             map.orientation = 0;
         }
         map.orderWorld();
+        center.x = z(map.world[idx[0]][idx[1]].x + (width / 2));
+        center.y = map.world[idx[0]][idx[1]].y + (height / 2);
     }
-    if (e.key == "ArrowRight") {
-        map.orientation --;
+    if (e.key == "ArrowLeft") {
+        let idx = centerTile();
+        console.log(idx)
+        map.orientation--;
         if (map.orientation < 0) {
             map.orientation = 5;
         }
         map.orderWorld();
+        center.x = z(map.world[idx[0]][idx[1]].x);
+        center.y = z(map.world[idx[0]][idx[1]].y);
     }
     // if (e.key = "Delete") {
     //     let ts = activeCharacter.id
@@ -46,4 +55,16 @@ document.onkeydown = function (e) {
     //     }
     //     characters = temp;
     // }
+}
+
+function centerTile() {
+    for (let i = 0; i < map.drawIndex.length; i++) {
+        var idx = map.drawIndex[i]
+        var tile = map.world[idx[0]][idx[1]];
+        var pp = pointProx([tile.x, tile.y], [getX({ clientX: width / 2 }), getY({ clientY: height / 2 })]);
+        if (pp < 50) {
+            console.log(idx)
+            return JSON.parse(JSON.stringify(idx));
+        }
+    }
 }

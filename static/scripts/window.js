@@ -18,7 +18,7 @@ let allFull = false;
 let roll = false;
 let mapWidth = 20;
 let mapHeight = 60;
-let center = { x: 0, y: 0 }
+let center = { x: width / 2, y: height / 2 }
 let originCoord = { x1: 0, y1: 0, x2: 0, y2: 0 }
 let drag = false;
 let drawing = false;
@@ -88,7 +88,7 @@ let ysize = 50
 
 //WORLDMAPSTUFF
 
-let map = new HexMap(25, "grassTile");
+let map = new HexMap(5, "grassTile");
 
 // let worldMap = [];
 // let y = ysize
