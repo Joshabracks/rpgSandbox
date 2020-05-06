@@ -171,5 +171,34 @@ function rotate2D(centerPoint, point, angle) {
         sin = Math.sin(radians),
         nx = (cos * (point.x - centerPoint.x)) + (sin * (point.y - centerPoint.y)) + centerPoint.x,
         ny = (cos * (point.y - centerPoint.y)) - (sin * (point.x - centerPoint.x)) + centerPoint.y;
-    return {x: nx, y: ny};
+    return { x: nx, y: ny };
+}
+
+function rotate3D(roll, pitch, yaw, px, py, pz) {
+    var cosa = Math.cos(yaw);
+    var sina = Math.sin(yaw);
+
+    var cosb = Math.cos(pitch);
+    var sinb = Math.sin(pitch);
+
+    var cosc = Math.cos(roll);
+    var sinc = Math.sin(roll);
+
+    var Axx = cosa * cosb;
+    var Axy = cosa * sinb * sinc - sina * cosc;
+    var Axz = cosa * sinb * cosc + sina * sinc;
+
+    var Ayx = sina * cosb;
+    var Ayy = sina * sinb * sinc + cosa * cosc;
+    var Ayz = sina * sinb * cosc - cosa * sinc;
+
+    var Azx = -sinb;
+    var Azy = cosb * sinc;
+    var Azz = cosb * cosc;
+
+    let result = {x: Axx * px + Axy * py + Axz * pz,
+        y: Ayx * px + Ayy * py + Ayz * pz,
+        z: Azx * px + Azy * py + Azz * pz}
+    // console.log(result)
+    return result
 }

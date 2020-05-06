@@ -1,44 +1,95 @@
 
-
+let rotor = 30;
 class HexMap {
-    constructor(height, width, tileType) {
-        this.height = height;
-        this.width = width;
-        this.world = [];
-        this.drawIndex = [];
-        for (let i = 1; i <= height; i++) {
+    constructor(size, tileType) {
+        // this.size = size;
+        this.world = [[new HexTile(tileType, 0, 0, 0, 1)]];
+        console.log(this.world)
+        this.drawIndex = [[0,0]];
+        for (let i = 1; i < size; i++) {
             this.world[i] = [];
-            for (let j = 1; j <= width; j++) {
-                this.world[i][j] = new HexTile(tileType, 0, 0, 0, 1);
+            for (let j = 0; j < i * 6; j++) {
+                this.world[i].push(new HexTile(tileType, 0, 0, 0, 1));
                 this.drawIndex.push([i, j]);
             }
         }
+        console.log(this.world)
         this.angle = 0;
-        this.orientation = 1;
+        this.orientation = 0;
+        console.log(this.drawIndex)
         this.orderWorld()
-        this.originalWorld = JSON.parse(JSON.stringify(this.world));
-        let tx = this.originalWorld[1][1].x;
-        let bx = this.originalWorld[2][this.width].x;
-        let ty = this.originalWorld[1][1].y;
-        let by = this.originalWorld[this.height][1].y;
-        this.pivot = { x: Math.mean([tx, bx]), y: Math.mean([ty, by]) };
-        this.drawIndex = this.sortDrawOrder(this.drawIndex);
+        console.log("DONE")
+        // this.originalWorld = JSON.parse(JSON.stringify(this.world));
+        // let tx = this.originalWorld[1][1].x;
+        // let bx = this.originalWorld[2][this.width].x;
+        // let ty = this.originalWorld[1][1].y;
+        // let by = this.originalWorld[this.height][1].y;
+        // this.pivot = { x: Math.mean([tx, bx]), y: Math.mean([ty, by]) };
+        // this.drawIndex = this.sortDrawOrder(this.drawIndex);
+        // for (this.angle = )
     }
     orderWorld() {
         //assigns x/y coords to tiles
-        if (this.orientation == 1) {
-            for (let h = 1; h <= this.height; h++) {
-                for (let w = 1; w <= this.width; w++) {
-                    if (w % 2 != 0) {
-                        this.world[h][w].y = (106 * h);
-                        this.world[h][w].x = (92 * w);
-                    } else {
-                        this.world[h][w].y = (106 * h) - 53;
-                        this.world[h][w].x = (92 * w);
+        for (let ring = 1; ring < this.world.length; ring++) {
+            let y = ring * 50;
+            let x = 0;
+            let iPos = (this.orientation * ring) + 1;
+            let rCount = 0;
+            let rDir = this.orientation;
+            console.log(iPos, rDir, x, y)
+            for (let i = 0; i < ring * 6; i++ ) {
+
+                if (rCount >= ring) {
+                    rCount = 0;
+                    rDir++;
+                    if (rDir > 5) {
+                        rDir = 0;
                     }
                 }
+                if (rDir == 0) {
+                    x += 75;
+                    y -= 25;
+                }
+                if (rDir == 1) {
+                    y -= 50;
+                }
+                if (rDir == 2) {
+                    x -= 75;
+                    y -= 25;
+                }
+                if (rDir == 3) {
+                    x -= 75;
+                    y += 25;
+                }
+                if (rDir == 4) {
+                    y += 50;
+                }
+                if (rDir == 5) {
+                    x += 75;
+                    y += 25;
+                }
+                this.world[ring][iPos].x = x;
+                this.world[ring][iPos].y = y;
+                iPos++;
+                if (iPos >= ring * 6) {
+                    iPos = 0;
+                }
+                rCount++;
             }
         }
+        this.sortDrawOrder(this.drawIndex);
+        // if (this.orientation == 1) {
+        // for (let h = 1; h <= this.height; h++) {
+        //     for (let w = 1; w <= this.width; w++) {
+        //         if (w % 2 != 0) {
+        //             this.world[h][w].y = (100 * h);
+        //             this.world[h][w].x = (100 * w);
+        //         } else {
+        //             this.world[h][w].y = (100 * h) - 50;
+        //             this.world[h][w].x = (100 * w);
+        //         }
+        //     }
+        // }
     }
     sortDrawOrder(arr) {
         if (arr.length < 2) {
@@ -73,16 +124,26 @@ class HexMap {
     //         }
     //     }
     // }
-    rotate() {
-        let angle = this.orientation * 60;
-        this.drawIndex.forEach((idx) => {
-            let newPoint = rotate2D({x: getX({clientX: width/2}), y: getY({clientY: height/2})}, this.originalWorld[idx[0]][idx[1]], angle);
-            this.world[idx[0]][idx[1]].x = newPoint.x;
-            this.world[idx[0]][idx[1]].y = newPoint.y;
-        })
-        this.drawIndex = this.sortDrawOrder(this.drawIndex);
-        // center = rotate2D(this.pivot, {x: center.x + (width / 2), y: center.y + (height / 2)}, angle)
-    }
+    // rotate() {
+    //     let angle = this.orientation * 60;
+    //     let row = rotor * Math.PI / 180;
+
+    //     console.log(this.orientation)
+    //     this.drawIndex.forEach((idx) => {
+    //         let originalPoint = this.originalWorld[idx[0]][idx[1]]
+    //         let newPoint = rotate2D(this.pivot, originalPoint, angle);
+    //         if (this.orientation == 0 || this.orientation == 3) {
+    //             newPoint = {x: newPoint.x * .75, y: newPoint.y * .5}
+    //         } else {
+    //             newPoint = {x: newPoint.x * .78, y: newPoint.y * .48}
+    //         }
+    //         this.world[idx[0]][idx[1]].x = newPoint.x;
+    //         this.world[idx[0]][idx[1]].y = newPoint.y;
+    //     })
+    //     console.log("ROTATE: " + angle)
+    //     this.drawIndex = this.sortDrawOrder(this.drawIndex);
+    //     center = rotate2D(this.pivot, {x: center.x + (width / 2), y: center.y + (height / 2)}, angle)
+    // }
     draw() {
         for (let i = 0; i < this.drawIndex.length; i++) {
             let tile = this.world[this.drawIndex[i][0]][this.drawIndex[i][1]];

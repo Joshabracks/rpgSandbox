@@ -24,17 +24,17 @@ document.onkeydown = function (e) {
     }
     if (e.key == "ArrowLeft") {
         map.orientation ++;
-        if (map.orientation > 6) {
+        if (map.orientation > 5) {
             map.orientation = 0;
         }
-        map.rotate();
+        map.orderWorld();
     }
     if (e.key == "ArrowRight") {
         map.orientation --;
         if (map.orientation < 0) {
-            map.orientation = 6;
+            map.orientation = 5;
         }
-        map.rotate();
+        map.orderWorld();
     }
     // if (e.key = "Delete") {
     //     let ts = activeCharacter.id

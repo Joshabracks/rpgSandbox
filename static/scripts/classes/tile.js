@@ -1,7 +1,7 @@
 let tiles = {};
 let tilesWheel = []
 // let hexTileArt = [[30, -55], [-30, -55], [-60, 0], [-30, 55], [30, 55], [60, 0], [30, -55]];
-let hexTileArt = [];
+let hexTileArt = [[50,0],[50,0],[25,25],[-25,25],[-50,0],[-25,-25],[25,-25],[50,0]];
 // let hexTileArt = [[28.866, -59.995], [-28.868, -59.995], [-57.736, -9.995], [-28.868, 40.005], [28.866, 40.005], [57.735, -9.995], [28.866, -59.995]];
 
 var side = 0,
@@ -9,11 +9,11 @@ var side = 0,
     x = 0,
     y = 0;
 
-hexTileArt.push([Math.floor(x + size * Math.cos(0)), Math.floor(y + size * Math.sin(0))]);
+// hexTileArt.push([Math.floor(x + size * Math.cos(0)), Math.floor(y + size * Math.sin(0))]);
 
-for (side; side < 7; side++) {
-    hexTileArt.push([Math.floor(x + size * Math.cos(side * 2 * Math.PI / 6)), Math.floor(y + size * Math.sin(side * 2 * Math.PI / 6))]);
-}
+// for (side; side < 7; side++) {
+//     hexTileArt.push([Math.floor(x + size * Math.cos(side * 2 * Math.PI / 6)), Math.floor(y + size * Math.sin(side * 2 * Math.PI / 6))]);
+// }
 
 class TileSprite {
     constructor(name, x, y, z, topTile, topColor, topOutline, bottomColor, bottomOutline) {
@@ -27,28 +27,28 @@ class TileSprite {
         this.topOutline = topOutline;
         this.bottomColor = bottomColor;
         this.bottomOutline = bottomOutline;
-        this.bottomTile = [[-30, 50], [-60, 2], [-60, 2], [-60, 2], [60, 2], [60, 2], [60, 2], [30, 50]];
+        this.bottomTile = [[-25, 50], [-50, 2], [-50, 2], [-50, 2], [50, 2], [50, 2], [50, 2], [25, 50]];
         tiles[this.name] = this;
         tilesWheel.push(this.name);
     }
     draw() {
         ctx.fillStyle = this.bottomColor;
         ctx.strokeStyle = this.bottomOutline;
-        ctx.lineWidth = z(4);
-        ctx.beginPath()
-        ctx.moveTo(z(this.bottomTile[0][0] + this.x + center.x), z(this.bottomTile[0][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[1][0] + this.x + center.x), z(this.bottomTile[1][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[2][0] + this.x + center.x), z(this.bottomTile[2][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[3][0] + this.x + center.x), z(this.bottomTile[3][1] + this.y + center.y - this.z));
-        ctx.lineTo(z(this.bottomTile[4][0] + this.x + center.x), z(this.bottomTile[4][1] + this.y + center.y - this.z));
-        ctx.lineTo(z(this.bottomTile[5][0] + this.x + center.x), z(this.bottomTile[5][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[6][0] + this.x + center.x), z(this.bottomTile[6][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[7][0] + this.x + center.x), z(this.bottomTile[7][1] + this.y + center.y));
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
-        ctx.lineWidth = z(2);
-        ctx.strokeRect(z(-30 + center.x + this.x), z(-this.z + center.y + this.y), z(60), z(50 + this.z));
+        // ctx.lineWidth = z(4);
+        // ctx.beginPath()
+        // ctx.moveTo(z(this.bottomTile[0][0] + this.x + center.x), z(this.bottomTile[0][1] + this.y + center.y));
+        // ctx.lineTo(z(this.bottomTile[1][0] + this.x + center.x), z(this.bottomTile[1][1] + this.y + center.y));
+        // ctx.lineTo(z(this.bottomTile[2][0] + this.x + center.x), z(this.bottomTile[2][1] + this.y + center.y));
+        // ctx.lineTo(z(this.bottomTile[3][0] + this.x + center.x), z(this.bottomTile[3][1] + this.y + center.y - this.z));
+        // ctx.lineTo(z(this.bottomTile[4][0] + this.x + center.x), z(this.bottomTile[4][1] + this.y + center.y - this.z));
+        // ctx.lineTo(z(this.bottomTile[5][0] + this.x + center.x), z(this.bottomTile[5][1] + this.y + center.y));
+        // ctx.lineTo(z(this.bottomTile[6][0] + this.x + center.x), z(this.bottomTile[6][1] + this.y + center.y));
+        // ctx.lineTo(z(this.bottomTile[7][0] + this.x + center.x), z(this.bottomTile[7][1] + this.y + center.y));
+        // ctx.stroke();
+        // ctx.fill();
+        // ctx.closePath();
+        // ctx.lineWidth = z(2);
+        // ctx.strokeRect(z(-30 + center.x + this.x), z(-this.z + center.y + this.y), z(60), z(50 + this.z));
         ctx.beginPath();
         ctx.moveTo(z(this.topTile[0][0] + this.x + center.x), z(this.topTile[0][1] + this.y + center.y - this.z));
         for (let i = 1; i < this.topTile.length; i++) {
