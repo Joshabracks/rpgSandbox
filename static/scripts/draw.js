@@ -61,26 +61,26 @@ function drawLine(Line) {
 }
 
 function distanceCircle() {
-    var distance = Math.distance(distancer.center, distancer.end);
+    var distance = z(Math.distance(distancer.center, distancer.end));
     if (distance > 0) {
         ctx.beginPath();
         ctx.strokeStyle = "black";
         ctx.fillStyle = "rgb(255, 255, 255, 0.25)"
         ctx.lineWidth = 5;
-        ctx.arc(distancer.center.x, distancer.center.y, distance, 0, 2 * Math.PI);
+        ctx.arc(z(distancer.center.x), z(distancer.center.y), z(distance), 0, 2 * Math.PI);
         ctx.fill();
         ctx.stroke();
         ctx.closePath()
         ctx.beginPath()
-        ctx.moveTo(distancer.center.x, distancer.center.y);
-        ctx.lineTo(distancer.end.x, distancer.end.y);
+        ctx.moveTo(z(distancer.center.x), z(distancer.center.y));
+        ctx.lineTo(z(distancer.end.x), z(distancer.end.y));
         ctx.stroke();
         ctx.closePath();
         ctx.fillStyle = "white";
         ctx.strokeStyle = "black";
         ctx.font = "40px Arial";
-        ctx.strokeText(Math.floor(distance / 20), distancer.end.x, distancer.end.y)
-        ctx.fillText(Math.floor(distance / 20), distancer.end.x, distancer.end.y)
+        ctx.strokeText(Math.floor(z(distance) / 20), z(distancer.end.x), z(distancer.end.y))
+        ctx.fillText(Math.floor(z(distance) / 20), z(distancer.end.x), z(distancer.end.y))
     }
 }
 

@@ -3,13 +3,43 @@ let rotor = 30;
 class HexMap {
     constructor(size, tileType) {
         // this.size = size;
-        this.world = [[new HexTile(tileType, 0, 0, 0, 1)]];
+        let jMoob = 50;
+        this.world = [[new HexTile("waterTile", 0, 0, jMoob, 1)]];
         console.log(this.world)
         this.drawIndex = [[0, 0]];
+        let tree = false;
         for (let i = 1; i < size; i++) {
             this.world[i] = [];
             for (let j = 0; j < i * 6; j++) {
-                this.world[i].push(new HexTile(tileType, 0, 0, 0, 1));
+                let tiler = "grassTile";
+                if (jMoob < 0) {
+                    jMoob = 0;
+                }
+                jMoob = Math.random() * (i * 5) + (i * 2);
+                if (jMoob < 50) {
+                    jMoob = 50;
+                    tiler = "waterTile"
+                } else if (jMoob < 75) {
+                    tiler = "sandTile";
+                } else if (Math.random() * 10 > 9) {
+                    tiler = "dirtTile";
+                    if (jMoob > 100) {
+                        jMoob = 100 + (Math.random() * 10)
+                    }
+                } else if (Math.random() * 10 > 9) {
+                    tiler = "stoneTile";
+                } else if (Math.random() * 20 > 19) {
+                    tree = true;
+                }
+                if (tiler == "grassTile" && jMoob > 100) {
+                    jMoob = 100 + (Math.random() * 10)
+                }
+                let tile = new HexTile(tiler, 0, 0, jMoob, 1);
+                if (tree) {
+                    tile.characters.push(new Tree01(tile, 100 + (Math.random() * 200), (Math.random() * 10) + 10))
+                }
+                tree = false;
+                this.world[i].push(tile);
                 this.drawIndex.push([i, j]);
             }
         }

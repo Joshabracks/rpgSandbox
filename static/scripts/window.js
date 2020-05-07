@@ -88,7 +88,7 @@ let ysize = 50
 
 //WORLDMAPSTUFF
 
-let map = new HexMap(5, "grassTile");
+let map = new HexMap(30, "grassTile");
 
 // let worldMap = [];
 // let y = ysize

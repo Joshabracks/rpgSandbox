@@ -1,6 +1,7 @@
 
-document.onkeydown = async function (e) {
+document.onkeydown = function (e) {
     if (e.keyCode == 69) {
+        console.log("DIST")
         if (!distancer) {
             distancer = { center: {}, end: {} }
         }

@@ -17,15 +17,15 @@ class Tree01 {
         let rot = 360 / totalPoints;
         console.log(totalPoints)
         const addPoint = (degrees) => {
-            let radius =( Math.random() * 50) + 150;
+            let radius =( Math.random() * 35) + 60;
             console.log(degrees)
             if (degrees > 360) {
                 degrees = 360
             }
             var cx = Math.cos(degrees * Math.PI / 180) * radius;
             var cy = Math.sin(degrees * Math.PI / 180) * radius;
-            var bx = Math.cos(degrees * Math.PI / 180) * (radius + 20);
-            var by = Math.sin(degrees * Math.PI / 180) * (radius + 20);
+            var bx = Math.cos(degrees * Math.PI / 180) * (radius + 10);
+            var by = Math.sin(degrees * Math.PI / 180) * (radius + 10);
             this.canopyPoints.push({x: cx, y: cy, bx: bx, by: by})
         }
         for (let i = 0; i < totalPoints; i++) {

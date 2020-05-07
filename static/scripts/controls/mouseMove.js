@@ -30,8 +30,8 @@ document.addEventListener('mousemove', function (e) {
             })
         }
     } else if (distancer) {
-        distancer.end.x = zo(e.clientX);
-        distancer.end.y = zo(e.clientY);
+        distancer.end.x = getX(e);
+        distancer.end.y = getY(e);
     } else if (drawing) {
         let tempX = getX(e)
         let tempY = getY(e)
