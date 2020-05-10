@@ -1,11 +1,11 @@
 
 let rotor = 30;
+
 class HexMap {
     constructor(size, tileType) {
         // this.size = size;
         let jMoob = 50;
-        this.world = [[new HexTile("waterTile", 0, 0, jMoob, 1)]];
-        console.log(this.world)
+        this.world = [[new HexTile("grassTile", 0, 0, jMoob, 1)]];
         this.drawIndex = [[0, 0]];
         let tree = false;
         for (let i = 1; i < size; i++) {
@@ -36,19 +36,18 @@ class HexMap {
                 }
                 let tile = new HexTile(tiler, 0, 0, jMoob, 1);
                 if (tree) {
-                    tile.characters.push(new Tree01(tile, 100 + (Math.random() * 200), (Math.random() * 10) + 10))
+                    tile.characters.push(new Tree01([i, j], 100 + (Math.random() * 200), (Math.random() * 10) + 10))
+                    tile.id = [i, j]
                 }
                 tree = false;
                 this.world[i].push(tile);
                 this.drawIndex.push([i, j]);
             }
         }
-        console.log(this.world)
         this.angle = 0;
         this.orientation = 0;
-        console.log(this.drawIndex)
         this.orderWorld()
-        // console.log("DONE")
+        this.world[0][0].characters[0] = new Character("images/temp/woman01", this.world[0][0].x, this.world[0][0].y, this.world[0][0].z)
         // this.originalWorld = JSON.parse(JSON.stringify(this.world));
         // let tx = this.originalWorld[1][1].x;
         // let bx = this.originalWorld[2][this.width].x;
@@ -99,7 +98,6 @@ class HexMap {
                     x += 75;
                     y += 25;
                 }
-                // console.log([ring, iPos])
                 this.world[ring][iPos].y = y;
                 this.world[ring][iPos].x = x;
                 iPos++;
@@ -157,7 +155,6 @@ class HexMap {
     //     let angle = this.orientation * 60;
     //     let row = rotor * Math.PI / 180;
 
-    //     console.log(this.orientation)
     //     this.drawIndex.forEach((idx) => {
     //         let originalPoint = this.originalWorld[idx[0]][idx[1]]
     //         let newPoint = rotate2D(this.pivot, originalPoint, angle);
@@ -169,13 +166,15 @@ class HexMap {
     //         this.world[idx[0]][idx[1]].x = newPoint.x;
     //         this.world[idx[0]][idx[1]].y = newPoint.y;
     //     })
-    //     console.log("ROTATE: " + angle)
     //     this.drawIndex = this.sortDrawOrder(this.drawIndex);
     //     center = rotate2D(this.pivot, {x: center.x + (width / 2), y: center.y + (height / 2)}, angle)
     // }
     draw() {
         for (let i = 0; i < this.drawIndex.length; i++) {
             let tile = this.world[this.drawIndex[i][0]][this.drawIndex[i][1]];
+            if (reRender) {
+                tile.fitTiles();
+            }
             if (z(tile.x + center.x) > -1000 && z(tile.y + center.y) > -1000 && z(tile.x + center.x) < width + 1000 && z(tile.y + center.y - tile.z) < height + 1000) {
                 tile.draw();
             }
@@ -220,5 +219,16 @@ class HexMap {
         //         }
         //     }
         // }
+    }
+}
+
+// GENERATE MAP default OPTIONS EXAMPLE
+
+function getNeighbors(tileIdx, width){
+    let result = [tileIdx];
+    let ring = tileIdx[0];
+    let idx = tileIdx[1];
+    if (map.world[ring].length == idx) {
+         
     }
 }

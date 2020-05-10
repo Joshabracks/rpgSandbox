@@ -15,11 +15,20 @@ function startErasing(e) {
 
 
 function drawScreen() {
+    if (reRender) {
+        tilesWheel.forEach((tile) => {
+            tiles[tile].fitTiles();
+        })
+    }
+    // let mark1 = Date.now();
     // ctx.translate(center.x, center.y)
     ctx.fillStyle = "#615f71"
     ctx.rect(0, 0, width, height)
     ctx.fill();
     map.draw();
+    if (reRender) {
+        reRender = false;
+    }
     // worldMap.forEach((tile) => {
     //     tile.draw()
     // })
@@ -49,6 +58,13 @@ function drawScreen() {
     buttons.forEach(function (button) {
         button.draw()
     })
+    // let mark2 = Date.now() - mark1;
+    // if (mark2 > 16.7) {
+    //     ctx.fillStyle = "red"
+    // }
+    // ctx.fillText(mark2, 50, 50);
+    // ctx.fillText(packetTest, 50, 50)
+
     window.requestAnimationFrame(drawScreen)
 }
 

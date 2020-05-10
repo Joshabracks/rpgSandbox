@@ -33,7 +33,6 @@ let updateStep = Date.now()
 let snap = true
 let editMap = false;
 let showBoundingBoxes = false;
-let zoom = 1;
 let distancer = false;
 let pencil = {
     color: "red",
@@ -44,6 +43,7 @@ let painting = false;
 let paintBrush = false;
 let mode = "draw";
 let hilightedTile;
+
 let eraser = {
     x: 0,
     y: 0,
@@ -89,6 +89,8 @@ let ysize = 50
 //WORLDMAPSTUFF
 
 let map = new HexMap(30, "grassTile");
+
+
 
 // let worldMap = [];
 // let y = ysize

@@ -32,8 +32,8 @@ document.onkeydown = function (e) {
             map.orientation = 0;
         }
         map.orderWorld();
-        center.x = z(map.world[idx[0]][idx[1]].x + (width / 2));
-        center.y = map.world[idx[0]][idx[1]].y + (height / 2);
+        center.x = map.world[idx[0]][idx[1]].x - (width / 2);
+        center.y = map.world[idx[0]][idx[1]].y - (height / 2);
     }
     if (e.key == "ArrowLeft") {
         let idx = centerTile();
@@ -43,8 +43,8 @@ document.onkeydown = function (e) {
             map.orientation = 5;
         }
         map.orderWorld();
-        center.x = z(map.world[idx[0]][idx[1]].x);
-        center.y = z(map.world[idx[0]][idx[1]].y);
+        center.x = map.world[idx[0]][idx[1]].x - (width / 2);
+        center.y = map.world[idx[0]][idx[1]].y - (height / 2);
     }
     // if (e.key = "Delete") {
     //     let ts = activeCharacter.id

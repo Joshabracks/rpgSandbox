@@ -76,3 +76,18 @@ function characterUpdate(character) {
     character.timestamp = Date.now()
     socket.emit("characterUpdate", { character: character })
 }
+
+// let mapper = JSON.parse(JSON.stringify(map))
+
+// let packetTest = 0;
+// let packetTimer = Date.now();
+// let timeOuter = setTimeout(function(){
+//     console.log('packet start')
+//     socket.emit('packet', map)
+// },5000)
+// socket.on('packit', function(data){
+//     console.log('packet')
+//     packetTest = Date.now() - packetTimer;
+//     packetTimer = Date.now();
+//     socket.emit('packet', map)
+// })

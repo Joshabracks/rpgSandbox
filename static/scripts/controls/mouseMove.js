@@ -11,6 +11,11 @@ document.addEventListener('mousemove', function (e) {
             if (activeTile.z < 0) {
                 activeTile.z = 0;
             }
+            activeTile.characters.forEach((char) => {
+                char.z = activeTile.z
+            })
+            highLightTile.z = activeTile.z;
+            activeTile.fitTiles();
         } else {
             map.drawIndex.forEach((idx) => {
                 var tile = map.world[idx[0]][idx[1]];
@@ -24,6 +29,7 @@ document.addEventListener('mousemove', function (e) {
                             
                         } else {
                             hilightedTile.sprite = tiles[paintBrush.name];
+                            hilightedTile.fitTiles();
                         }
                     }
                 }

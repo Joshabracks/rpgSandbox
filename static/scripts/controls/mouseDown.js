@@ -42,13 +42,18 @@ document.addEventListener('mousedown', function (e) {
             painting = true;
             if (paintBrush.class != "TileSprite") {
                 console.log("TREEEEEEEEE")
-                let tree = new Tree01(hilightedTile, 300 + (Math.random() * 300), (Math.random() * 20) + 20)
+                let tree = new Tree01(hilightedTile.id, 300 + (Math.random() * 300), (Math.random() * 20) + 20)
                 // console.log(tree)
                 // console.log(hilightedTile)
-                hilightedTile.characters[0] = tree;
+                if (hilightedTile.characters[0]) {
+                    hilightedTile.characters[0] = tree;
+                } else {
+                    hilightedTile.characters.push(tree)
+                }
             } else {
                 console.log("NOT TREEEEEE")
                 hilightedTile.sprite = tiles[paintBrush.name];
+                hilightedTile.fitTiles();
             }
             // characters.forEach((tile) => {
             //     if (tile.class == "Tile" && pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {

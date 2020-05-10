@@ -1,5 +1,5 @@
 let scripts = [
-    "/socket/socket.io.js",
+    '/socket/socket.io.js',
     'scripts/math.js',
     'scripts/classes/point.js',
     'scripts/classes/line.js',
@@ -23,6 +23,11 @@ let scripts = [
     'scripts/controls/mouseMove.js',
     'scripts/controls/wheel.js'
 ]
+
+let renderContainer = document.getElementById('renderContainer');
+let svgContainer = document.getElementById('svgContainer');
+// renderContainer.style.visibility  = "hidden";
+
 function scriptLoader(int, el) {
     if (scripts[int] != undefined ) {
         var script = scripts[int];
@@ -42,3 +47,6 @@ function scriptLoader(int, el) {
 }
 
 scriptLoader(0);
+
+let zoom = 1;
+let reRender = true;

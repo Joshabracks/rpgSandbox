@@ -1,7 +1,8 @@
 let tiles = {};
 let tilesWheel = []
 // let hexTileArt = [[30, -55], [-30, -55], [-60, 0], [-30, 55], [30, 55], [60, 0], [30, -55]];
-let hexTileArt = [[50,0],[50,0],[25,25],[-25,25],[-50,0],[-25,-25],[25,-25],[50,0]];
+let hexTileArt = [[100, 25], [75, 50], [25, 50], [0, 25], [25, 0], [75, 0]];
+// let hexTileArtBottom = [[25, 75], [0, 25], [0, 25], [0, 25], [0, 25], [100, 25], [100, 25], [75, 75]];
 // let hexTileArt = [[28.866, -59.995], [-28.868, -59.995], [-57.736, -9.995], [-28.868, 40.005], [28.866, 40.005], [57.735, -9.995], [28.866, -59.995]];
 
 var side = 0,
@@ -16,49 +17,43 @@ var side = 0,
 // }
 
 class TileSprite {
-    constructor(name, x, y, z, topTile, topColor, topOutline, bottomColor, bottomOutline) {
+    constructor(name, x, y, z, topColor, topOutline, bottomColor, bottomOutline) {
         this.name = name;
         this.class = "TileSprite";
         this.x = x;
         this.y = y;
         this.z = z;
-        this.topTile = topTile;
         this.topColor = topColor;
         this.topOutline = topOutline;
         this.bottomColor = bottomColor;
         this.bottomOutline = bottomOutline;
-        this.bottomTile = [[-25, 50], [-50, 2], [-50, 2], [-50, 2], [50, 2], [50, 2], [50, 2], [25, 50]];
+
         tiles[this.name] = this;
         tilesWheel.push(this.name);
+        this.TT = document.createElement('canvas');
+        renderContainer.appendChild(this.TT);
+        this.TT.id = this.name + "TT";
+        this.TTContext = this.TT.getContext("2d");
+        this.fitTiles();
+    }
+    fitTiles() {
+        this.TT.width = z(102);
+        this.TT.height = z(52);
+        //top
+        this.TTContext.lineWidth = z(2);
+        this.TTContext.beginPath();
+        this.TTContext.moveTo(z(hexTileArt[0][0] + 1), z(hexTileArt[0][1]) + 1);
+        for (let i = 1; i < hexTileArt.length; i++) {
+            this.TTContext.lineTo(z(hexTileArt[i][0] + 1), z(hexTileArt[i][1] + 1))
+        }
+        this.TTContext.fillStyle = this.topColor;
+        this.TTContext.strokeStyle = this.topOutline;
+        this.TTContext.closePath();
+        this.TTContext.stroke();
+        this.TTContext.fill();
     }
     draw() {
-        ctx.fillStyle = this.bottomColor;
-        ctx.strokeStyle = this.bottomOutline;
-        ctx.lineWidth = z(4);
-        ctx.beginPath()
-        ctx.moveTo(z(this.bottomTile[0][0] + this.x + center.x), z(this.bottomTile[0][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[1][0] + this.x + center.x), z(this.bottomTile[1][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[2][0] + this.x + center.x), z(this.bottomTile[2][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[3][0] + this.x + center.x), z(this.bottomTile[3][1] + this.y + center.y - this.z));
-        ctx.lineTo(z(this.bottomTile[4][0] + this.x + center.x), z(this.bottomTile[4][1] + this.y + center.y - this.z));
-        ctx.lineTo(z(this.bottomTile[5][0] + this.x + center.x), z(this.bottomTile[5][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[6][0] + this.x + center.x), z(this.bottomTile[6][1] + this.y + center.y));
-        ctx.lineTo(z(this.bottomTile[7][0] + this.x + center.x), z(this.bottomTile[7][1] + this.y + center.y));
-        ctx.stroke();
-        ctx.fill();
-        ctx.closePath();
-        ctx.lineWidth = z(2);
-        ctx.strokeRect(z(-30 + center.x + this.x), z(-this.z + center.y + this.y), z(60), z(50 + this.z));
-        ctx.beginPath();
-        ctx.moveTo(z(this.topTile[0][0] + this.x + center.x), z(this.topTile[0][1] + this.y + center.y - this.z));
-        for (let i = 1; i < this.topTile.length; i++) {
-            ctx.lineTo(z(this.topTile[i][0] + this.x + center.x), z(this.topTile[i][1] + this.y + center.y - this.z))
-        }
-        ctx.fillStyle = this.topColor;
-        ctx.strokeStyle = this.topOutline;
-        ctx.closePath();
-        ctx.stroke();
-        ctx.fill();
+        ctx.drawImage(this.TT, z(this.x + center.x - 1) - (this.TT.width / 2), z(this.y + center.y - this.z - 1) - (this.TT.height / 2))
     }
 }
 
@@ -95,11 +90,36 @@ class HexTile {
         this.z = z;
         this.orientation = orientation;
         this.characters = [];
+        this.TT = document.createElement('canvas');
+        renderContainer.appendChild(this.TT);
+        this.TTContext = this.TT.getContext("2d");
+        this.fitTiles();
+    }
+    fitTiles() {
+        //bottom
+        this.TT.width = z(102);
+        this.TT.height = z(52 + this.z);
+        this.TTContext.fillStyle = this.sprite.bottomColor;
+        this.TTContext.strokeStyle = this.sprite.bottomOutline;
+        this.TTContext.lineWidth = z(2);
+        this.TTContext.beginPath()
+        this.TTContext.moveTo(z(hexTileArt[0][0]) + 1, z(hexTileArt[0][1] + 1));
+        this.TTContext.lineTo(z(hexTileArt[0][0]) + 1, z(hexTileArt[0][1] + 1 + this.z));
+        this.TTContext.lineTo(z(hexTileArt[1][0]) + 1, z(hexTileArt[1][1] + 1 + this.z));
+        this.TTContext.lineTo(z(hexTileArt[2][0]) + 1, z(hexTileArt[2][1] + 1 + this.z));
+        this.TTContext.lineTo(z(hexTileArt[3][0]) + 1, z(hexTileArt[3][1] + 1 + this.z));
+        this.TTContext.lineTo(z(hexTileArt[3][0]) + 1, z(hexTileArt[3][1] + 1));
+        this.TTContext.closePath();
+        this.TTContext.stroke();
+        this.TTContext.fill();
+        this.TTContext.lineWidth = z(1);
+        this.TTContext.strokeRect(z(25), z(25), z(50), z(25 + this.z));
     }
     draw() {
         this.sprite.x = this.x;
         this.sprite.y = this.y;
         this.sprite.z = this.z;
+        ctx.drawImage(this.TT, z(this.x + center.x - 1) - (this.TT.width / 2), z(this.y + center.y + 24) - (this.TT.height))
         this.sprite.draw();
         this.characters.forEach((character => {
             character.draw()
@@ -149,16 +169,16 @@ class HexTile {
 
 
 
-let grassTile = new TileSprite("grassTile", 0, 0, 0, hexTileArt, "#24A520", "#1A7715", "#725F11", "#3F3516");
-let dirtTile = new TileSprite("dirtTile", 0, 0, 0, hexTileArt, "#725F11", "#3F3516", "#725F11", "#3F3516");
-let waterTile = new TileSprite("waterTile", 0, 0, 0, hexTileArt, "#2162A3", "#5353F9", "#2162A3", "#5353F9");
-let sandTile = new TileSprite("sandTile", 0, 0, 0, hexTileArt, "#C1B385", "#DDDACA", "#968C60", "#7F7044");
-let stoneTile = new TileSprite("stoneTile", 0, 0, 0, hexTileArt, "#6D6C68", "#4C4B49", "#606060", "#3F3F3F");
-let lavaTile = new TileSprite("lavaTile", 0, 0, 0, hexTileArt, "#D83D00", "#F99900", "#D33C00", "#FFAA00");
+let grassTile = new TileSprite("grassTile", 0, 0, 0, "#24A520", "#1A7715", "#725F11", "#3F3516");
+let dirtTile = new TileSprite("dirtTile", 0, 0, 0, "#725F11", "#3F3516", "#725F11", "#3F3516");
+let waterTile = new TileSprite("waterTile", 0, 0, 0, "#2162A3", "#5353F9", "#2162A3", "#5353F9");
+let sandTile = new TileSprite("sandTile", 0, 0, 0, "#C1B385", "#DDDACA", "#968C60", "#7F7044");
+let stoneTile = new TileSprite("stoneTile", 0, 0, 0, "#6D6C68", "#4C4B49", "#606060", "#3F3F3F");
+let lavaTile = new TileSprite("lavaTile", 0, 0, 0, "#D83D00", "#F99900", "#D33C00", "#FFAA00");
 
 class HighLightTile {
     constructor() {
-        // this.topTile = [[28.866, -59.995], [-28.868, -59.995], [-57.736, -9.995], [-28.868, 40.005], [28.866, 40.005], [57.735, -9.995], [28.866, -59.995]];
+        // hexTileArtTop = [[28.866, -59.995], [-28.868, -59.995], [-57.736, -9.995], [-28.868, 40.005], [28.866, 40.005], [57.735, -9.995], [28.866, -59.995]];
         // this.bottomTile = [[-28.868, 55.005], [-57.736, 5.005], [-57.736, -9.995], [-57.736, -9.995], [57.735, -9.995], [57.735, -9.995], [57.735, 5.005], [28.866, 55.005]];
         this.tile = tiles["stoneTile"];
         this.y = 0;
@@ -170,18 +190,36 @@ class HighLightTile {
             this.tile.x = hilightedTile.x;
             this.tile.y = hilightedTile.y;
             this.tile.z = hilightedTile.z;
-            ctx.globalAlpha = 0.5;
-            this.tile.draw();
-            ctx.globalAlpha = 1;
+            ctx.lineWidth = z(5);
+            ctx.strokeStyle = "white";
+            ctx.beginPath();
+            // ctx.moveTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25));
+            ctx.moveTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25 - this.z));
+            ctx.lineTo(z(hexTileArt[1][0] + this.x + center.x - 50), z(-hexTileArt[1][1] + this.y + center.y + 25 - this.z));
+            ctx.lineTo(z(hexTileArt[2][0] + this.x + center.x - 50), z(-hexTileArt[2][1] + this.y + center.y + 25 - this.z));
+            ctx.lineTo(z(hexTileArt[3][0] + this.x + center.x - 50), z(-hexTileArt[3][1] + this.y + center.y + 25 - this.z));
+            ctx.lineTo(z(hexTileArt[4][0] + this.x + center.x - 50), z(hexTileArt[4][1] + this.y + center.y + 25 - this.z));
+            ctx.lineTo(z(hexTileArt[5][0] + this.x + center.x - 50), z(hexTileArt[5][1] + this.y + center.y + 25 - this.z));
+            ctx.closePath();
+            ctx.stroke();
+            ctx.moveTo(z(hexTileArt[3][0] + this.x + center.x - 50), z(-hexTileArt[3][1] + this.y + center.y + 25 - this.z));
+            ctx.lineTo(z(hexTileArt[3][0] + this.x + center.x - 50), z(-hexTileArt[3][1] + this.y + center.y + 25));
+            ctx.lineTo(z(hexTileArt[4][0] + this.x + center.x - 50), z(hexTileArt[4][1] + this.y + center.y + 25));
+            ctx.lineTo(z(hexTileArt[5][0] + this.x + center.x - 50), z(hexTileArt[5][1] + this.y + center.y + 25));
+            ctx.lineTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25))
+            ctx.lineTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25 - this.z))
+            // ctx.lineTo(z(hexTileArt[1][0] + this.x + center.x - 50), z(-hexTileArt[1][1] + this.y + center.y + 25 - this.z));
+            // ctx.lineTo(z(hexTileArt[2][0] + this.x + center.x - 50), z(-hexTileArt[2][1] + this.y + center.y + 25 - this.z));
+            ctx.stroke();
         }
         // ctx.globalAlpha = 0.5;
         // ctx.fillStyle = "white";
         // ctx.strokeStyle = "black";
         // ctx.lineWidth = z(7);
         // ctx.beginPath();
-        // ctx.moveTo(z(this.topTile[0][0] + this.x + center.x), z(this.topTile[0][1] + this.y + center.y - this.z));
-        // for (let i = 1; i < this.topTile.length; i++) {
-        //     ctx.lineTo(z(this.topTile[i][0] + this.x + center.x), z(this.topTile[i][1] + this.y + center.y - this.z))
+        // ctx.moveTo(z(hexTileArtTop[0][0] + this.x + center.x), z(hexTileArtTop[0][1] + this.y + center.y - this.z));
+        // for (let i = 1; i < hexTileArtTop.length; i++) {
+        //     ctx.lineTo(z(hexTileArtTop[i][0] + this.x + center.x), z(hexTileArtTop[i][1] + this.y + center.y - this.z))
         // }
         // ctx.fillStyle = "black";
         // ctx.strokeStyle = "white";

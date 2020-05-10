@@ -47,5 +47,9 @@ module.exports = function (io) {
             delete drawQ[data.line.id]
             socket.broadcast.emit('erase', { line: data.line })
         })
+        // socket.on('packet', function(data){
+        //     console.log('packet')
+        //     socket.emit('packit', data);
+        // })
     });
 }
