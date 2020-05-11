@@ -169,11 +169,11 @@ class HexTile {
 
 
 
-let grassTile = new TileSprite("grassTile", 0, 0, 0, "#24A520", "#1A7715", "#725F11", "#3F3516");
-let dirtTile = new TileSprite("dirtTile", 0, 0, 0, "#725F11", "#3F3516", "#725F11", "#3F3516");
+let grassTile = new TileSprite("grassTile", 0, 0, 0, "#24A520", "#1A7715", "#016B01", "#024402");
+let dirtTile = new TileSprite("dirtTile", 0, 0, 0, "#725F11", "#3F3516", "#563011", "#3A200A");
 let waterTile = new TileSprite("waterTile", 0, 0, 0, "#2162A3", "#5353F9", "#2162A3", "#5353F9");
 let sandTile = new TileSprite("sandTile", 0, 0, 0, "#C1B385", "#DDDACA", "#968C60", "#7F7044");
-let stoneTile = new TileSprite("stoneTile", 0, 0, 0, "#6D6C68", "#4C4B49", "#606060", "#3F3F3F");
+let stoneTile = new TileSprite("stoneTile", 0, 0, 0, "#6D6C68", "#4C4B49", "#494949", "#3F3F3F");
 let lavaTile = new TileSprite("lavaTile", 0, 0, 0, "#D83D00", "#F99900", "#D33C00", "#FFAA00");
 
 class HighLightTile {

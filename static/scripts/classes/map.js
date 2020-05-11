@@ -4,7 +4,7 @@ let rotor = 30;
 class HexMap {
     constructor(size, tileType) {
         // this.size = size;
-        let jMoob = 50;
+        let jMoob = 100;
         this.world = [[new HexTile("grassTile", 0, 0, jMoob, 1)]];
         this.drawIndex = [[0, 0]];
         let tree = false;
@@ -15,7 +15,7 @@ class HexMap {
                 if (jMoob < 0) {
                     jMoob = 0;
                 }
-                jMoob = Math.random() * (i * 5) + (i * 2);
+                jMoob = Math.random() * (i * 20) + (i * 15);
                 if (jMoob < 50) {
                     jMoob = 50;
                     tiler = "waterTile"
@@ -28,6 +28,7 @@ class HexMap {
                     }
                 } else if (Math.random() * 10 > 9) {
                     tiler = "stoneTile";
+                    jMoob = (Math.random() * 25) + 100
                 } else if (Math.random() * 20 > 19) {
                     tree = true;
                 }
@@ -59,6 +60,13 @@ class HexMap {
     }
     orderWorld() {
         //assigns x/y coords to tiles
+        this.world[0][0].characters.forEach((character) => {
+            character.orientation = this.orientation + character.orientation;
+            if (character.orientation > 5) {
+                character.orientation = character.orientation - 5;
+            }
+            console.log(character)
+        })
         for (let ring = 1; ring < this.world.length; ring++) {
             let y = ring * 50;
             let x = 0;
@@ -100,6 +108,15 @@ class HexMap {
                 }
                 this.world[ring][iPos].y = y;
                 this.world[ring][iPos].x = x;
+                this.world[ring][iPos].characters.forEach((character) => {
+
+                    character.orientation = this.orientation + character.orientation;
+                    if (character.orientation > 5) {
+                        character.orientation = character.orientation - 5;
+                    }
+
+                })
+
                 iPos++;
                 rCount++;
             }
@@ -224,11 +241,11 @@ class HexMap {
 
 // GENERATE MAP default OPTIONS EXAMPLE
 
-function getNeighbors(tileIdx, width){
+function getNeighbors(tileIdx, width) {
     let result = [tileIdx];
     let ring = tileIdx[0];
     let idx = tileIdx[1];
     if (map.world[ring].length == idx) {
-         
+
     }
 }
