@@ -1,3 +1,4 @@
+
 let scripts = [
     '/socket/socket.io.js',
     'scripts/math.js',
@@ -26,7 +27,6 @@ let scripts = [
 
 let renderContainer = document.getElementById('renderContainer');
 let svgContainer = document.getElementById('svgContainer');
-// renderContainer.style.visibility  = "hidden";
 
 function scriptLoader(int, el) {
     if (scripts[int] != undefined ) {
@@ -47,6 +47,5 @@ function scriptLoader(int, el) {
 }
 
 scriptLoader(0);
-
 let zoom = 1;
 let reRender = true;

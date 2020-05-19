@@ -64,7 +64,24 @@ function drawScreen() {
     // }
     // ctx.fillText(mark2, 50, 50);
     // ctx.fillText(packetTest, 50, 50)
-
+    FPS.current = Math.floor(1000 / (Date.now() - FPS.now));
+    FPS.now = Date.now();
+    if (FPS.benchmarking > 100) {
+        if (FPS.current > FPS.high) {
+            FPS.high = Math.round(FPS.current);
+        }
+        if (FPS.current < FPS.low) {
+            FPS.low = Math.round(FPS.current);
+        }
+    } else {
+        FPS.benchmarking++;
+    }
+    ctx.fillStyle = "red"
+    ctx.fillText(FPS.low, 50, 50);
+    ctx.fillStyle = "white"
+    ctx.fillText(FPS.current, 50, 75)
+    ctx.fillStyle = "black"
+    ctx.fillText(FPS.high, 50, 100)
     window.requestAnimationFrame(drawScreen)
 }
 

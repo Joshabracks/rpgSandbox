@@ -43,6 +43,13 @@ let painting = false;
 let paintBrush = false;
 let mode = "draw";
 let hilightedTile;
+let FPS = { 
+    now: Date.now(),
+    low: 5000,
+    high: 0,
+    current: 0,
+    benchmarking: 0,
+}
 
 let eraser = {
     x: 0,
@@ -88,7 +95,7 @@ let ysize = 50
 
 //WORLDMAPSTUFF
 
-let map = new HexMap(30, "grassTile");
+let map = new HexMap(50, "grassTile");
 
 
 

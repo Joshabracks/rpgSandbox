@@ -10,23 +10,25 @@ document.addEventListener('wheel', function (e) {
             if (zoom > 0.25) {
                 h1 = zo(canvas.clientHeight)
                 w1 = zo(canvas.clientWidth)
-                zoom *= .75
+                zoom -= .25
                 h2 = h1 - zo(canvas.clientHeight)
                 w2 = w1 - zo(canvas.clientWidth)
                 center.y -= h2 / 2;
                 center.x -= w2 / 2;
                 reRender = true;
+                console.log(zoom)
             }
         } else {
             if (zoom < 2) {
                 h1 = zo(canvas.clientHeight)
                 w1 = zo(canvas.clientWidth)
-                zoom *= 1.25;
+                zoom += .25;
                 h2 = h1 - zo(canvas.clientHeight)
                 w2 = w1 - zo(canvas.clientWidth)
                 center.y -= h2 / 2;
                 center.x -= w2 / 2;
                 reRender = true;
+                console.log(zoom)
             }
         }
     }
