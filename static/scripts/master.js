@@ -16,6 +16,7 @@ let scripts = [
     'scripts/draw.js',
     'scripts/window.js',
     'scripts/socket.js',
+    'scripts/actions/addCharacter.js',
     'scripts/controls/contextMenu.js',
     'scripts/controls/keyDown.js',
     'scripts/controls/keyUp.js',

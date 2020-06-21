@@ -71,7 +71,17 @@ function addSwatches() {
     },
     "#006738",
     "#603813"
-    ))
+    )),
+    buttons.push(new Button("Characters",
+    200,
+    83,
+    150,
+    50,
+    () => {
+        paintBrush = {name: "Characters"};
+    },
+    "slategrey",
+    "black"))
 }
 
 function removeSwatches() {

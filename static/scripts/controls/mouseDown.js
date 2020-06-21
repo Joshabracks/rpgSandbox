@@ -44,15 +44,17 @@ document.addEventListener('mousedown', function (e) {
             painting = true;
             if (paintBrush.class != "TileSprite") {
                 if (paintBrush.name == "Tree") {
-                    let tree = new Tree01(hilightedTile.id, 100 + (Math.random() * 200), (Math.random() * 10) + 10)
+                    addCharacter(new Tree01(hilightedTile.id, 100 + (Math.random() * 200), (Math.random() * 10) + 10));
                     // console.log(tree)
                     // console.log(hilightedTile)
-                    if (hilightedTile.characters[0]) {
-                        hilightedTile.characters[0] = tree;
-                    } else {
-                        hilightedTile.characters.push(tree)
-                    }
-                } else if (paintBrush.name == "Delete") {
+                    // if (hilightedTile.characters[0]) {
+                    //     hilightedTile.characters[0] = tree;
+                    // } else {
+                    //     hilightedTile.characters.push(tree)
+                    // }
+                } else if (paintBrush.name == "Characters") {
+                    addCharacter(new Character("images/temp/woman01", hilightedTile.x, hilightedTile.y, hilightedTile.z));
+                }else if (paintBrush.name == "Delete") {
                     hilightedTile.characters.pop();
                 }
             } else if (hilightedTile.sprite) {

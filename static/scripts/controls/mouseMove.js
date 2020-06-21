@@ -21,12 +21,10 @@ window.addEventListener('mousemove', function (e) {
         }
         if (painting) {
             if (paintBrush.name == "Tree") {
-                let tree = new Tree01(hilightedTile.id, 100 + (Math.random() * 200), (Math.random() * 10) + 10)
-                if (hilightedTile.characters[0]) {
-                    hilightedTile.characters[0] = tree;
-                } else {
-                    hilightedTile.characters.push(tree)
-                }
+                addCharacter(new Tree01(hilightedTile.id, 100 + (Math.random() * 200), (Math.random() * 10) + 10));
+                
+            } else if (paintBrush.name == "Characters") {
+                addCharacter(new Character("images/temp/woman01", hilightedTile.x, hilightedTile.y, hilightedTile.z));
             } else if (paintBrush.name == "Delete") {
                 hilightedTile.characters.pop();
             } else if (hilightedTile.sprite) {
