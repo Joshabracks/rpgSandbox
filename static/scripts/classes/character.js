@@ -1,7 +1,9 @@
 class Character {
     constructor(artPath, x, y, z){
         this.height = 150;
+        this.totalHeight = this.height;
         this.width = 100;
+        this.radialWidth = this.width / 2;
         this.front = new Image(100, 150);
         this.front.src = artPath + "/front.svg";
         svgContainer.appendChild(this.front);

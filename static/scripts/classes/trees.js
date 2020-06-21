@@ -16,13 +16,21 @@ class Tree01 {
         this.canopyPoints = []
         let totalPoints = (Math.random() * 10) + 20;
         let rot = 360 / totalPoints;
+        let topPoint = 0;
+        let widestPoint = 0;
         const addPoint = (degrees) => {
             let radius = (Math.random() * 35) + 60;
             if (degrees > 360) {
                 degrees = 360
             }
             var cx = Math.cos(degrees * Math.PI / 180) * radius;
+            if (Math.abs(cx) > Math.abs(widestPoint)) {
+                widestPoint = Math.abs(cx);
+            }
             var cy = Math.sin(degrees * Math.PI / 180) * radius;
+            if (cy > topPoint) {
+                topPoint = cy;
+            }
             var bx = Math.cos(degrees * Math.PI / 180) * (radius + 10);
             var by = Math.sin(degrees * Math.PI / 180) * (radius + 10);
             this.canopyPoints.push({ x: cx, y: cy, bx: bx, by: by })
@@ -33,6 +41,8 @@ class Tree01 {
             addPoint(degrees)
         }
         addPoint(360)
+        this.radialWidth = widestPoint;
+        this.totalHeight = topPoint + this.height;
     }
     draw() {
         ctx.fillStyle = this.trunkColor;

@@ -126,11 +126,18 @@ class HexTile {
             ctx.filter = "brightness(200%)";
         }
         var visibilityCheck = (
-            hilightedTile 
-            && hilightedTile.y < this.y 
-            && Math.abs(Math.abs(hilightedTile.x - this.x) + Math.abs((hilightedTile.y - hilightedTile.z) - (this.y - this.z))) < 200 && this.z > hilightedTile.z
-            && (hilightedTile.y - hilightedTile.z) - (this.y - this.z) > -50
-            );
+            (hilightedTile
+                && hilightedTile.y < this.y
+                && (Math.abs(Math.abs(hilightedTile.x - this.x) + Math.abs((hilightedTile.y - hilightedTile.z) - (this.y - this.z))) < 200 && this.z > hilightedTile.z
+                    && (hilightedTile.y - hilightedTile.z) - (this.y - this.z) > -50
+                )
+            )
+        );
+        var visibilityCheck2 = (hilightedTile && hilightedTile.y < this.y
+            && this.characters && this.characters[0]
+            && hilightedTile && Math.abs(hilightedTile.x - this.x) < this.characters[0].radialWidth
+            && hilightedTile.y - hilightedTile.z > this.y - (this.z + this.characters[0].totalHeight)
+        );
         if (visibilityCheck) {
             ctx.save();
             ctx.globalAlpha = .50;
@@ -139,13 +146,20 @@ class HexTile {
         if (visibilityCheck) {
             ctx.restore();
         }
+        if (visibilityCheck2) {
+            ctx.save();
+            ctx.globalAlpha = .50;
+        }
+        this.characters.forEach((character => {
+            character.draw()
+        }))
+        if (visibilityCheck2) {
+            ctx.restore();
+        }
         if (hilightedTile && hilightedTile == this) {
             ctx.restore();
         }
         // this.sprite.draw(this.TTContext);
-        this.characters.forEach((character => {
-            character.draw()
-        }))
     }
     give(characterIdx, tile) {
         if (tile.class != "HexTile") {
