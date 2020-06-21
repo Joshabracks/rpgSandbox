@@ -8,10 +8,10 @@ class Tree01 {
         this.leavesColor = "rgb(" + ((Math.random() * 100)) + "," + ((Math.random() * 100) + 100) + "," + ((Math.random() * 100)) + ")";
         this.trunkColor = "rgb(" + ((Math.random() * 50) + 100) + "," + ((Math.random() * 50) + 50) + "," + ((Math.random() * 50)) + ")";
         this.trunkArt = [
-            () => { ctx.moveTo(z(-this.width + map.world[this.parent[0]][this.parent[1]].x + center.x), z(0 + map.world[this.parent[0]][this.parent[1]].y + center.y - map.world[this.parent[0]][this.parent[1]].z)) },
-            () => { ctx.bezierCurveTo(z(-this.width + map.world[this.parent[0]][this.parent[1]].x + center.x), z(15 + map.world[this.parent[0]][this.parent[1]].y + center.y - map.world[this.parent[0]][this.parent[1]].z), z(this.width + map.world[this.parent[0]][this.parent[1]].x + center.x), z(15 + map.world[this.parent[0]][this.parent[1]].y + center.y - map.world[this.parent[0]][this.parent[1]].z), z(this.width + map.world[this.parent[0]][this.parent[1]].x + center.x), z(0 + map.world[this.parent[0]][this.parent[1]].y + center.y - map.world[this.parent[0]][this.parent[1]].z)) },
-            () => { ctx.lineTo(z(this.width + map.world[this.parent[0]][this.parent[1]].x + center.x), z(-this.height + map.world[this.parent[0]][this.parent[1]].y + center.y - map.world[this.parent[0]][this.parent[1]].z)) },
-            () => { ctx.lineTo(z(-this.width + map.world[this.parent[0]][this.parent[1]].x + center.x), z(-this.height + map.world[this.parent[0]][this.parent[1]].y + center.y - map.world[this.parent[0]][this.parent[1]].z)) }
+            () => { this.context.moveTo(z(-this.width + (this.imageWidth / 2)), z( -25 + (this.image.height))) },
+            () => { this.context.bezierCurveTo(z(-this.width + (this.imageWidth / 2)), z(this.image.height - 10), z(this.width + (this.imageWidth / 2)), z(this.image.height - 10), z(this.width + (this.imageWidth / 2)), z(-25 + (this.image.height))) },
+            () => { this.context.lineTo(z(this.width + (this.imageWidth / 2)), z(25 + (this.image.height - this.height))) },
+            () => { this.context.lineTo(z(-this.width + (this.imageWidth / 2)), z(25 + (this.image.height - this.height))) }
         ]
         this.canopyPoints = []
         let totalPoints = (Math.random() * 10) + 20;
@@ -41,26 +41,42 @@ class Tree01 {
             addPoint(degrees)
         }
         addPoint(360)
-        this.radialWidth = widestPoint;
+        this.imageWidth = widestPoint;
         this.totalHeight = topPoint + this.height;
+        this.image = document.createElement('canvas');
+        this.context = this.image.getContext('2d');
+        renderContainer.append(this.image);
+        this.radialWidth = Math.floor(this.imageWidth);
+        this.imageWidth = (this.imageWidth * 2) + 50;
+        this.imageHeight = this.totalHeight + 50;
+        this.render();
     }
     draw() {
-        ctx.fillStyle = this.trunkColor;
-        ctx.strokeStyle = "#603813";
-        ctx.lineWidth = z(1);
-        ctx.beginPath();
+        ctx.drawImage(this.image, map.world[this.parent[0]][this.parent[1]].x + center.x - (this.image.width / 2), center.y + map.world[this.parent[0]][this.parent[1]].y - this.image.height -  map.world[this.parent[0]][this.parent[1]].z + 20)
+    }
+    render() {
+        // this.context.fillStyle = 'black';
+        this.image.width = z(this.imageWidth);
+        this.image.height = z(this.imageHeight);
+        var offsetX = this.image.width / 2;
+        var offsetY = this.image.height - this.height;
+        // this.context.fillRect(0, 0, this.image.width, this.image.height)
+        this.context.fillStyle = this.trunkColor;
+        this.context.strokeStyle = "#603813";
+        this.context.lineWidth = z(1);
+        this.context.beginPath();
         this.trunkArt.forEach((fn) => { fn() })
-        ctx.closePath();
-        ctx.stroke();
-        ctx.fill();
-        ctx.beginPath();
-        ctx.fillStyle = this.leavesColor;
-        ctx.moveTo(z(this.canopyPoints[0].x + map.world[this.parent[0]][this.parent[1]].x + center.x), z(this.canopyPoints[0].y + map.world[this.parent[0]][this.parent[1]].y - this.height - map.world[this.parent[0]][this.parent[1]].z + center.y));
+        this.context.closePath();
+        this.context.stroke();
+        this.context.fill();
+        this.context.beginPath();
+        this.context.fillStyle = this.leavesColor;
+        this.context.moveTo(z(this.canopyPoints[0].x - 25 + this.radialWidth + (this.image.width / 2)), z(this.canopyPoints[0].y - this.Height + this.image.height + 25));
         for (let i = 1; i < this.canopyPoints.length; i++) {
-            ctx.bezierCurveTo(z(this.canopyPoints[i - 1].bx + map.world[this.parent[0]][this.parent[1]].x + center.x), z(this.canopyPoints[i - 1].by + map.world[this.parent[0]][this.parent[1]].y - this.height - map.world[this.parent[0]][this.parent[1]].z + center.y), z(this.canopyPoints[i].bx + map.world[this.parent[0]][this.parent[1]].x + center.x), z(this.canopyPoints[i].by + map.world[this.parent[0]][this.parent[1]].y - this.height - map.world[this.parent[0]][this.parent[1]].z + center.y), z(this.canopyPoints[i].x + map.world[this.parent[0]][this.parent[1]].x + center.x), z(this.canopyPoints[i].y + map.world[this.parent[0]][this.parent[1]].y - this.height - map.world[this.parent[0]][this.parent[1]].z + center.y));
+            this.context.bezierCurveTo(z(this.canopyPoints[i - 1].bx + offsetX), z(this.canopyPoints[i - 1].by + offsetY), z(this.canopyPoints[i].bx + offsetX), z(this.canopyPoints[i].by + offsetY), z(this.canopyPoints[i].x + offsetX), z(this.canopyPoints[i].y + offsetY));
         }
-        ctx.closePath();
-        ctx.stroke();
-        ctx.fill();
+        this.context.closePath();
+        this.context.stroke();
+        this.context.fill();
     }
 }

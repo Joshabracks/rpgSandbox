@@ -15,6 +15,9 @@ function startErasing(e) {
 
 
 function drawScreen() {
+    if (hilightedTile && hilightedTile.characters && hilightedTile.characters[0] && hilightedTile.characters[0].totalHeight) {
+        console.log(hilightedTile.characters[0].totalHeight)
+    }
     if (!document.hidden) {
         if (reRender) {
             tilesWheel.forEach((tile) => {
