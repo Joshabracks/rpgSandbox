@@ -18,6 +18,7 @@ function buttonProx(e) {
     for (let i = 0; i < buttons.length; i++) {
         if (Math.abs(buttons[i].x - e.clientX) < buttons[i].width && Math.abs(buttons[i].y - e.clientY) < buttons[i].height) {
             // console.log("buttonPRox")
+            console.log(buttons[i])
             return buttons[i]
         }
     }
@@ -201,4 +202,24 @@ function rotate3D(roll, pitch, yaw, px, py, pz) {
         z: Azx * px + Azy * py + Azz * pz}
     // console.log(result)
     return result
+}
+
+Math.quickSort = function (arr) {
+    if (arr.length < 2) {
+        return arr;
+    }
+    let mid = Math.floor(arr.length / 2)
+    let pivot = arr[mid];
+    let lower = [];
+    let higher = [];
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] != pivot) {
+            if (arr[i] > pivot || (arr[i] == pivot && arr[i].class != "tile")) {
+                higher.push(arr[i])
+            } else {
+                lower.push(arr[i])
+            }
+        }
+    }
+    return Math.quickSort(lower).concat([pivot]).concat(Math.quickSort(higher));
 }

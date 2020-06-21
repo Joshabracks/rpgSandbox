@@ -5,17 +5,19 @@ document.addEventListener('mousedown', function (e) {
         if (button) {
             button.click()
         } else if (editMap) {
-            map.drawIndex.forEach((idx) => {
-                let tile = map.world[idx[0]][idx[1]];
-                if (tile.class == "Tile" && pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
-                    activeTile = tile;
-                    originCoord.x1 = zo(clientLoc.x)
-                    originCoord.y1 = zo(clientLoc.y)
-                    originCoord.z = tile.z
-                    originCoord.x2 = tile.x
-                    originCoord.y2 = tile.y
-                }
-            })
+            // map.drawIndex.forEach((idx) => {
+            //     let tile = map.world[idx[0]][idx[1]];
+            //     if (tile.class == "Tile" && pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
+            if (hilightedTile) {
+                activeTile = hilightedTile;
+                originCoord.x1 = zo(clientLoc.x)
+                originCoord.y1 = zo(clientLoc.y)
+                originCoord.z = hilightedTile.z
+                originCoord.x2 = hilightedTile.x
+                originCoord.y2 = hilightedTile.y
+            }
+            //     }
+            // })
         } else if (distancer) {
             distancer.center.x = zo(e.clientX);
             distancer.center.y = zo(e.clientY);
@@ -41,17 +43,20 @@ document.addEventListener('mousedown', function (e) {
         if (editMap) {
             painting = true;
             if (paintBrush.class != "TileSprite") {
-                console.log("TREEEEEEEEE")
-                let tree = new Tree01(hilightedTile.id, 300 + (Math.random() * 300), (Math.random() * 20) + 20)
-                // console.log(tree)
-                // console.log(hilightedTile)
-                if (hilightedTile.characters[0]) {
-                    hilightedTile.characters[0] = tree;
-                } else {
-                    hilightedTile.characters.push(tree)
+                if (paintBrush.name == "Tree") {
+                    let tree = new Tree01(hilightedTile.id, 100 + (Math.random() * 200), (Math.random() * 10) + 10)
+                    // console.log(tree)
+                    // console.log(hilightedTile)
+                    if (hilightedTile.characters[0]) {
+                        hilightedTile.characters[0] = tree;
+                    } else {
+                        hilightedTile.characters.push(tree)
+                    }
+                } else if (paintBrush.name == "Delete") {
+                    hilightedTile.characters.pop();
                 }
-            } else {
-                console.log("NOT TREEEEEE")
+            } else if (hilightedTile.sprite) {
+                console.log("HIT")
                 hilightedTile.sprite = tiles[paintBrush.name];
                 hilightedTile.fitTiles();
             }

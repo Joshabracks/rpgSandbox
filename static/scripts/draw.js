@@ -15,73 +15,77 @@ function startErasing(e) {
 
 
 function drawScreen() {
-    if (reRender) {
-        tilesWheel.forEach((tile) => {
-            tiles[tile].fitTiles();
+    if (!document.hidden) {
+        if (reRender) {
+            tilesWheel.forEach((tile) => {
+                tiles[tile].fitTiles();
+            })
+        }
+        // let mark1 = Date.now();
+        // ctx.translate(center.x, center.y)
+        ctx.fillStyle = "#615f71"
+        ctx.rect(0, 0, width, height)
+        ctx.fill();
+        map.draw();
+        if (reRender) {
+            reRender = false;
+        }
+        // worldMap.forEach((tile) => {
+        //     tile.draw()
+        // })
+        // characters.forEach((character) => {
+        //     if (character.drawFull) {
+        //         character.drawFull()
+        //     } else {
+        //         character.draw()
+        //     }
+        // })
+        drawQ.forEach((shape) => {
+            shape.draw()
         })
-    }
-    // let mark1 = Date.now();
-    // ctx.translate(center.x, center.y)
-    ctx.fillStyle = "#615f71"
-    ctx.rect(0, 0, width, height)
-    ctx.fill();
-    map.draw();
-    if (reRender) {
-        reRender = false;
-    }
-    // worldMap.forEach((tile) => {
-    //     tile.draw()
-    // })
-    // characters.forEach((character) => {
-    //     if (character.drawFull) {
-    //         character.drawFull()
-    //     } else {
-    //         character.draw()
-    //     }
-    // })
-    drawQ.forEach((shape) => {
-        shape.draw()
-    })
-    if (showEraser) {
-        eraser.draw()
-    }
-    if (distancer) {
-        distanceCircle()
-    }
-    if (editMap) {
-        highLightTile.draw();
-    }
-    ctx.save()
-    ctx.scale(z(width) / width, z(height) / height);
-    dice.forEach((die) => { die.draw() })
-    ctx.restore()
-    buttons.forEach(function (button) {
-        button.draw()
-    })
-    // let mark2 = Date.now() - mark1;
-    // if (mark2 > 16.7) {
-    //     ctx.fillStyle = "red"
-    // }
-    // ctx.fillText(mark2, 50, 50);
-    // ctx.fillText(packetTest, 50, 50)
-    FPS.current = Math.floor(1000 / (Date.now() - FPS.now));
-    FPS.now = Date.now();
-    if (FPS.benchmarking > 100) {
-        if (FPS.current > FPS.high) {
-            FPS.high = Math.round(FPS.current);
+        if (showEraser) {
+            eraser.draw()
         }
-        if (FPS.current < FPS.low) {
-            FPS.low = Math.round(FPS.current);
+        if (distancer) {
+            distanceCircle()
         }
-    } else {
-        FPS.benchmarking++;
+        // if (editMap) {
+        //     highLightTile.draw();
+        // }
+        ctx.save()
+        ctx.scale(z(width) / width, z(height) / height);
+        dice.forEach((die) => { die.draw() })
+        ctx.restore()
+        buttons.forEach(function (button) {
+            button.draw()
+        })
+        // let mark2 = Date.now() - mark1;
+        // if (mark2 > 16.7) {
+        //     ctx.fillStyle = "red"
+        // }
+        // ctx.fillText(mark2, 50, 50);
+        // ctx.fillText(packetTest, 50, 50)
+        if (debug) {
+            FPS.current = Math.floor(1000 / (Date.now() - FPS.now));
+            FPS.now = Date.now();
+            if (FPS.benchmarking > 100) {
+                if (FPS.current > FPS.high) {
+                    FPS.high = Math.round(FPS.current);
+                }
+                if (FPS.current < FPS.low) {
+                    FPS.low = Math.round(FPS.current);
+                }
+            } else {
+                FPS.benchmarking++;
+            }
+            ctx.fillStyle = "red";
+            ctx.fillText(FPS.low, 50, 50);
+            ctx.fillStyle = "white";
+            ctx.fillText(FPS.current, 50, 75);
+            ctx.fillStyle = "black";
+            ctx.fillText(FPS.high, 50, 100);
+        }
     }
-    ctx.fillStyle = "red"
-    ctx.fillText(FPS.low, 50, 50);
-    ctx.fillStyle = "white"
-    ctx.fillText(FPS.current, 50, 75)
-    ctx.fillStyle = "black"
-    ctx.fillText(FPS.high, 50, 100)
     window.requestAnimationFrame(drawScreen)
 }
 

@@ -2,7 +2,7 @@
 let rotor = 30;
 
 class HexMap {
-    constructor(size, tileType) {
+    constructor(size) {
         // this.size = size;
         let jMoob = 100;
         this.world = [[new HexTile("grassTile", 0, 0, jMoob, 1)]];
@@ -12,33 +12,33 @@ class HexMap {
             this.world[i] = [];
             for (let j = 0; j < i * 6; j++) {
                 let tiler = "grassTile";
-                if (jMoob < 0) {
-                    jMoob = 0;
-                }
-                jMoob = Math.random() * (i * 20) + (i * 15);
-                if (jMoob < 50) {
-                    jMoob = 50;
-                    tiler = "waterTile"
-                } else if (jMoob < 75) {
-                    tiler = "sandTile";
-                } else if (Math.random() * 10 > 9) {
-                    tiler = "dirtTile";
-                    if (jMoob > 100) {
-                        jMoob = 100 + (Math.random() * 10)
-                    }
-                } else if (Math.random() * 10 > 9) {
-                    tiler = "stoneTile";
-                    jMoob = (Math.random() * 25) + 100
-                } else if (Math.random() * 20 > 19) {
-                    tree = true;
-                }
-                if (tiler == "grassTile" && jMoob > 100) {
-                    jMoob = 100 + (Math.random() * 10)
-                }
+                // if (jMoob < 0) {
+                //     jMoob = 0;
+                // }
+                // jMoob = Math.random() * (i * 20) + (i * 15);
+                // if (jMoob < 50) {
+                //     jMoob = 50;
+                //     tiler = "waterTile"
+                // } else if (jMoob < 75) {
+                //     tiler = "sandTile";
+                // } else if (Math.random() * 10 > 9) {
+                //     tiler = "dirtTile";
+                //     if (jMoob > 100) {
+                //         jMoob = 100 + (Math.random() * 10)
+                //     }
+                // } else if (Math.random() * 10 > 9) {
+                //     tiler = "stoneTile";
+                //     jMoob = (Math.random() * 25) + 100
+                // } else if (Math.random() * 20 > 19) {
+                //     tree = true;
+                // }
+                // if (tiler == "grassTile" && jMoob > 100) {
+                //     jMoob = 100 + (Math.random() * 10)
+                // }
                 let tile = new HexTile(tiler, 0, 0, jMoob, 1);
+                tile.id = [i, j]
                 if (tree) {
                     tile.characters.push(new Tree01([i, j], 100 + (Math.random() * 200), (Math.random() * 10) + 10))
-                    tile.id = [i, j]
                 }
                 tree = false;
                 this.world[i].push(tile);
@@ -60,6 +60,7 @@ class HexMap {
     }
     orderWorld() {
         //assigns x/y coords to tiles
+        let drawQ = {}
         this.world[0][0].characters.forEach((character) => {
             character.orientation = this.orientation + character.orientation;
             if (character.orientation > 5) {
@@ -119,8 +120,13 @@ class HexMap {
 
                 iPos++;
                 rCount++;
+                if (!drawQ[y]) {
+                    drawQ[y] = [];
+                }
+                // drawQ[y].push(this.world[ring][iPos])
             }
         }
+        // console.log(Object.keys(drawQ).length)
         this.drawIndex = this.sortDrawOrder(this.drawIndex);
         // if (this.orientation == 1) {
         // for (let h = 1; h <= this.height; h++) {

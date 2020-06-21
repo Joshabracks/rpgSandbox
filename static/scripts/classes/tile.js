@@ -52,8 +52,9 @@ class TileSprite {
         this.TTContext.stroke();
         this.TTContext.fill();
     }
-    draw() {
-        ctx.drawImage(this.TT, z(this.x + center.x - 1) - (this.TT.width / 2), z(this.y + center.y - this.z - 1) - (this.TT.height / 2))
+    draw(context) {
+        // ctx.drawImage(this.TT, z(this.x + center.x - 1) - (this.TT.width / 2), z(this.y + center.y - this.z - 1) - (this.TT.height / 2))
+        context.drawImage(this.TT, 0, 0);
     }
 }
 
@@ -66,7 +67,7 @@ class Tile {
         this.class = "Tile";
         this.bottomTile = [[-28.868, 55.005], [-57.736, 5.005], [-57.736, -9.995], [-57.736, -9.995], [57.735, -9.995], [57.735, -9.995], [57.735, 5.005], [28.866, 55.005]];
     }
-    draw() {
+    draw(context) {
         tiles[this.tile].x = this.x;
         tiles[this.tile].y = this.y;
         tiles[this.tile].z = this.z;
@@ -114,13 +115,34 @@ class HexTile {
         this.TTContext.fill();
         this.TTContext.lineWidth = z(1);
         this.TTContext.strokeRect(z(25), z(25), z(50), z(25 + this.z));
+        this.sprite.draw(this.TTContext);
     }
     draw() {
         this.sprite.x = this.x;
         this.sprite.y = this.y;
         this.sprite.z = this.z;
+        if (hilightedTile && hilightedTile == this) {
+            ctx.save();
+            ctx.filter = "brightness(200%)";
+        }
+        var visibilityCheck = (
+            hilightedTile 
+            && hilightedTile.y < this.y 
+            && Math.abs(Math.abs(hilightedTile.x - this.x) + Math.abs((hilightedTile.y - hilightedTile.z) - (this.y - this.z))) < 200 && this.z > hilightedTile.z
+            && (hilightedTile.y - hilightedTile.z) - (this.y - this.z) > -50
+            );
+        if (visibilityCheck) {
+            ctx.save();
+            ctx.globalAlpha = .50;
+        }
         ctx.drawImage(this.TT, z(this.x + center.x - 1) - (this.TT.width / 2), z(this.y + center.y + 24) - (this.TT.height))
-        this.sprite.draw();
+        if (visibilityCheck) {
+            ctx.restore();
+        }
+        if (hilightedTile && hilightedTile == this) {
+            ctx.restore();
+        }
+        // this.sprite.draw(this.TTContext);
         this.characters.forEach((character => {
             character.draw()
         }))
@@ -171,10 +193,14 @@ class HexTile {
 
 let grassTile = new TileSprite("grassTile", 0, 0, 0, "#24A520", "#1A7715", "#016B01", "#024402");
 let dirtTile = new TileSprite("dirtTile", 0, 0, 0, "#725F11", "#3F3516", "#563011", "#3A200A");
-let waterTile = new TileSprite("waterTile", 0, 0, 0, "#2162A3", "#5353F9", "#2162A3", "#5353F9");
+let waterTile = new TileSprite("waterTile", 0, 0, 0, "#0077be ", "#00578b ", "#0077be", "#00578b ");
 let sandTile = new TileSprite("sandTile", 0, 0, 0, "#C1B385", "#DDDACA", "#968C60", "#7F7044");
 let stoneTile = new TileSprite("stoneTile", 0, 0, 0, "#6D6C68", "#4C4B49", "#494949", "#3F3F3F");
-let lavaTile = new TileSprite("lavaTile", 0, 0, 0, "#D83D00", "#F99900", "#D33C00", "#FFAA00");
+let lavaTile = new TileSprite("lavaTile", 0, 0, 0, "#D83D00", "#FFFF00", "#D33C00", "#FFFF00");
+let snowTile = new TileSprite("snowTile", 0, 0, 0, "#EEEEFF", "#B3E7FF", "#B3E7FF", "#FFFFFF");
+let iceTile = new TileSprite("iceTile", 0, 0, 0, "#93E7FB", "#E0FFFF", "#C0F6FB", "#FFFAFA");
+
+let hilightedTileList = [];
 
 class HighLightTile {
     constructor() {
@@ -194,20 +220,22 @@ class HighLightTile {
             ctx.strokeStyle = "white";
             ctx.beginPath();
             // ctx.moveTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25));
-            ctx.moveTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25 - this.z));
-            ctx.lineTo(z(hexTileArt[1][0] + this.x + center.x - 50), z(-hexTileArt[1][1] + this.y + center.y + 25 - this.z));
-            ctx.lineTo(z(hexTileArt[2][0] + this.x + center.x - 50), z(-hexTileArt[2][1] + this.y + center.y + 25 - this.z));
-            ctx.lineTo(z(hexTileArt[3][0] + this.x + center.x - 50), z(-hexTileArt[3][1] + this.y + center.y + 25 - this.z));
-            ctx.lineTo(z(hexTileArt[4][0] + this.x + center.x - 50), z(hexTileArt[4][1] + this.y + center.y + 25 - this.z));
-            ctx.lineTo(z(hexTileArt[5][0] + this.x + center.x - 50), z(hexTileArt[5][1] + this.y + center.y + 25 - this.z));
+            ctx.moveTo(z(this.tile.x + center.x + hexTileArt[0][0] - 50), z(this.tile.y + center.y - hexTileArt[0][1] + 25 - this.tile.z));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[1][0] - 50), z(this.tile.y + center.y - hexTileArt[1][1] + 25 - this.tile.z));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[2][0] - 50), z(this.tile.y + center.y - hexTileArt[2][1] + 25 - this.tile.z));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[3][0] - 50), z(this.tile.y + center.y - hexTileArt[3][1] + 25 - this.tile.z));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[4][0] - 50), z(this.tile.y + center.y - hexTileArt[4][1] + 25 - this.tile.z));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[5][0] - 50), z(this.tile.y + center.y - hexTileArt[5][1] + 25 - this.tile.z));
             ctx.closePath();
             ctx.stroke();
-            ctx.moveTo(z(hexTileArt[3][0] + this.x + center.x - 50), z(-hexTileArt[3][1] + this.y + center.y + 25 - this.z));
-            ctx.lineTo(z(hexTileArt[3][0] + this.x + center.x - 50), z(-hexTileArt[3][1] + this.y + center.y + 25));
-            ctx.lineTo(z(hexTileArt[4][0] + this.x + center.x - 50), z(hexTileArt[4][1] + this.y + center.y + 25));
-            ctx.lineTo(z(hexTileArt[5][0] + this.x + center.x - 50), z(hexTileArt[5][1] + this.y + center.y + 25));
-            ctx.lineTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25))
-            ctx.lineTo(z(hexTileArt[0][0] + this.x + center.x - 50), z(-hexTileArt[0][1] + this.y + center.y + 25 - this.z))
+            ctx.moveTo(z(this.tile.x + center.x + hexTileArt[3][0] - 50), z(this.tile.y + center.y - hexTileArt[3][1] + 25 - this.tile.z));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[3][0] - 50), z(this.tile.y + center.y - hexTileArt[3][1] + 25));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[3][0] - 50), z(this.tile.y + center.y - hexTileArt[3][1] + 25));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[4][0] - 50), z(this.tile.y + center.y + hexTileArt[4][1] + 25));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[5][0] - 50), z(this.tile.y + center.y + hexTileArt[5][1] + 25));
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[0][0] - 50), z(this.tile.y + center.y - hexTileArt[0][1] + 25))
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[0][0] - 50), z(this.tile.y + center.y - hexTileArt[0][1] + 25))
+            ctx.lineTo(z(this.tile.x + center.x + hexTileArt[0][0] - 50), z(this.tile.y + center.y - hexTileArt[0][1] + 25 - this.tile.z));
             // ctx.lineTo(z(hexTileArt[1][0] + this.x + center.x - 50), z(-hexTileArt[1][1] + this.y + center.y + 25 - this.z));
             // ctx.lineTo(z(hexTileArt[2][0] + this.x + center.x - 50), z(-hexTileArt[2][1] + this.y + center.y + 25 - this.z));
             ctx.stroke();

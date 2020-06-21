@@ -50,8 +50,19 @@ function addSwatches() {
         ))
         paintBrush = tile;
     }
-    buttons.push(new Button("Tree",
+    buttons.push(new Button("Delete",
     0,
+    83,
+    100,
+    50,
+    () => {
+        paintBrush = {name: "Delete"}
+    },
+    "black",
+    "white"
+    ))
+    buttons.push(new Button("Tree",
+    100,
     83,
     100,
     50,
@@ -66,7 +77,7 @@ function addSwatches() {
 function removeSwatches() {
     let temp = [];
     buttons.forEach((button) => {
-        if (button.name != "" && button.name != "Tree") {
+        if (button.name != "" && button.name != "Tree" && button.name != "Delete") {
             temp.push(button)
         }
     })

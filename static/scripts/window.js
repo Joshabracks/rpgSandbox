@@ -50,6 +50,7 @@ let FPS = {
     current: 0,
     benchmarking: 0,
 }
+debug = false;
 
 let eraser = {
     x: 0,

@@ -1,4 +1,40 @@
-document.addEventListener('mousemove', function (e) {
+
+window.addEventListener('mousemove', function (e) {
+    function tileHilight() {
+        var tempHilightedTileList = [];
+        map.drawIndex.forEach((idx) => {
+            var tile = map.world[idx[0]][idx[1]];
+            if (pointProx([tile.x, tile.y - tile.z], [getX(e), getY(e)]) < 50) {
+                tempHilightedTileList.push(tile);
+                // hilightedTile = tile;
+            }
+        })
+        var isHilighted = false;
+        tempHilightedTileList.forEach((tile) => {
+            if (tile == hilightedTile) {
+                isHilighted = true;
+            }
+        })
+        hilightedTileList = tempHilightedTileList;
+        if (!isHilighted && tempHilightedTileList.length) {
+            hilightedTile = hilightedTile = hilightedTileList[0];
+        }
+        if (painting) {
+            if (paintBrush.name == "Tree") {
+                let tree = new Tree01(hilightedTile.id, 100 + (Math.random() * 200), (Math.random() * 10) + 10)
+                if (hilightedTile.characters[0]) {
+                    hilightedTile.characters[0] = tree;
+                } else {
+                    hilightedTile.characters.push(tree)
+                }
+            } else if (paintBrush.name == "Delete") {
+                hilightedTile.characters.pop();
+            } else if (hilightedTile.sprite) {
+                hilightedTile.sprite = tiles[paintBrush.name];
+                hilightedTile.fitTiles();
+            }
+        }
+    }
     clientLoc.x = e.clientX
     clientLoc.y = e.clientY
     if (drag) {
@@ -7,33 +43,17 @@ document.addEventListener('mousemove', function (e) {
         // drawScreen()
     } else if (editMap) {
         if (activeTile) {
-            activeTile.z = Math.abs(getY(e) - originCoord.y2 - originCoord.z);
+            activeTile.z = Math.abs(getY(e) - originCoord.y2);
             if (activeTile.z < 0) {
                 activeTile.z = 0;
             }
             activeTile.characters.forEach((char) => {
                 char.z = activeTile.z
             })
-            highLightTile.z = activeTile.z;
+            // highLightTile.z = activeTile.z;
             activeTile.fitTiles();
         } else {
-            map.drawIndex.forEach((idx) => {
-                var tile = map.world[idx[0]][idx[1]];
-                if (pointProx([tile.x, tile.y], [getX(e), getY(e)]) < 50) {
-                    hilightedTile = tile;
-                    highLightTile.x = tile.x;
-                    highLightTile.y = tile.y;
-                    highLightTile.z = tile.z;
-                    if (painting) {
-                        if (paintBrush.name == "Tree") {
-                            
-                        } else {
-                            hilightedTile.sprite = tiles[paintBrush.name];
-                            hilightedTile.fitTiles();
-                        }
-                    }
-                }
-            })
+            tileHilight();
         }
     } else if (distancer) {
         distancer.end.x = getX(e);
@@ -67,6 +87,7 @@ document.addEventListener('mousemove', function (e) {
         }
         // drawScreen()
     } else {
+        tileHilight();
         let active = false;
         let tempX = getX(e);
         let tempY = getY(e);

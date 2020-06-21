@@ -1,5 +1,18 @@
 document.addEventListener('wheel', function (e) {
-    if (!drag) {
+    if (hilightedTileList && hilightedTileList.length > 1) {
+        console.log(hilightedTileList);
+        for (let i = 0; i < hilightedTileList.length; i++) {
+            let tile = hilightedTileList[i];
+            if (tile == hilightedTile) {
+                if (i < hilightedTileList.length - 1) {
+                    hilightedTile = hilightedTileList[i + 1];
+                } else {
+                    hilightedTile = hilightedTileList[0];
+                }
+                break;
+            }
+        }
+    } else if (!drag) {
         if (activeCharacter) {
             if (e.deltaY > 0) {
                 activeCharacter.z++
@@ -16,7 +29,6 @@ document.addEventListener('wheel', function (e) {
                 center.y -= h2 / 2;
                 center.x -= w2 / 2;
                 reRender = true;
-                console.log(zoom)
             }
         } else {
             if (zoom < 2) {
@@ -28,7 +40,6 @@ document.addEventListener('wheel', function (e) {
                 center.y -= h2 / 2;
                 center.x -= w2 / 2;
                 reRender = true;
-                console.log(zoom)
             }
         }
     }
