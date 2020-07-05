@@ -74,7 +74,7 @@ class Tree01 {
         this.context.moveTo(z(this.canopyPoints[0].x - 25 + this.radialWidth + (this.image.width / 2)), z(this.canopyPoints[0].y - this.Height + this.image.height + 25));
         for (let i = 1; i < this.canopyPoints.length; i++) {
             this.context.bezierCurveTo(z(this.canopyPoints[i - 1].bx + offsetX), z(this.canopyPoints[i - 1].by + offsetY), z(this.canopyPoints[i].bx + offsetX), z(this.canopyPoints[i].by + offsetY), z(this.canopyPoints[i].x + offsetX), z(this.canopyPoints[i].y + offsetY));
-        }
+        } 
         this.context.closePath();
         this.context.stroke();
         this.context.fill();
