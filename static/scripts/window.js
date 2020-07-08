@@ -9,6 +9,7 @@ window.onload = function () {
     window.requestAnimationFrame(drawScreen);
 }
 const canvas = document.getElementById('canvas')
+const ui = document.getElementById('ui');
 const ctx = canvas.getContext('2d', {alpha: false, desynchronized: true})
 let width = window.innerWidth
 let height = window.innerHeight

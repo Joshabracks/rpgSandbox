@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
     <title>RPG Sandbox</title>
 </head>
+
 <body style="overflow: hidden;">
-    <canvas id='canvas' style="position: absolute; top: 0px; left: 0px;"></canvas>
+    <canvas id='canvas' style="position: absolute; top: 0px; left: 0px; z-index: 0;"></canvas>
+    <div id="ui" style="position: absolute; top: 0px; left: 0px; z-index: 1; height: 100%; width: 100%;">
+        <div id="menuBar" style="display: block; width: 100%;"></div>
+        <div id="editMapContainer" style="display: none; width: 100px;"></div>
+    </div>
     <div id='renderContainer' style="visibility: hidden;"></div>
     <div id='svgContainer' style="visibility: hidden;"></div>
     <script id="master" src="scripts/master.js"></script>

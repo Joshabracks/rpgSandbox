@@ -24,25 +24,15 @@ function drawScreen() {
                 tiles[tile].fitTiles();
             })
         }
-        // let mark1 = Date.now();
-        // ctx.translate(center.x, center.y)
         ctx.fillStyle = "#615f71"
         ctx.rect(0, 0, width, height)
         ctx.fill();
-        map.draw();
+        if (map) {
+            map.draw();
+        }
         if (reRender) {
             reRender = false;
         }
-        // worldMap.forEach((tile) => {
-        //     tile.draw()
-        // })
-        // characters.forEach((character) => {
-        //     if (character.drawFull) {
-        //         character.drawFull()
-        //     } else {
-        //         character.draw()
-        //     }
-        // })
         drawQ.forEach((shape) => {
             shape.draw()
         })
@@ -52,22 +42,13 @@ function drawScreen() {
         if (distancer) {
             distanceCircle()
         }
-        // if (editMap) {
-        //     highLightTile.draw();
-        // }
         ctx.save()
         ctx.scale(z(width) / width, z(height) / height);
         dice.forEach((die) => { die.draw() })
         ctx.restore()
-        buttons.forEach(function (button) {
-            button.draw()
-        })
-        // let mark2 = Date.now() - mark1;
-        // if (mark2 > 16.7) {
-        //     ctx.fillStyle = "red"
-        // }
-        // ctx.fillText(mark2, 50, 50);
-        // ctx.fillText(packetTest, 50, 50)
+        // buttons.forEach(function (button) {
+        //     button.draw()
+        // })
         if (debug) {
             FPS.current = Math.floor(1000 / (Date.now() - FPS.now));
             FPS.now = Date.now();
@@ -88,6 +69,9 @@ function drawScreen() {
             ctx.fillStyle = "black";
             ctx.fillText(FPS.high, 50, 100);
         }
+    }
+    if (document.getElementById('ui').style.display == 'none') {
+        document.getElementById('ui').style.removeProperty('display');
     }
     window.requestAnimationFrame(drawScreen)
 }

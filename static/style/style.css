@@ -1,0 +1,18 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+button {
+    transition-duration: .5;
+    width: 75px;
+    height: 75px;
+    outline: 0;
+    border-style: solid;
+    border-width: 5px;
+}
+
+.active-button {
+    border-radius: 2px;
+    border-style: double;
+}

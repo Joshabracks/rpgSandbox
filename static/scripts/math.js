@@ -14,16 +14,16 @@ function getY(e) {
     let solution = zo(e.clientY) - center.y - zo(canvas.offsetTop);
     return solution;
 }
-function buttonProx(e) {
-    for (let i = 0; i < buttons.length; i++) {
-        if (Math.abs(buttons[i].x - e.clientX) < buttons[i].width && Math.abs(buttons[i].y - e.clientY) < buttons[i].height) {
-            // console.log("buttonPRox")
-            console.log(buttons[i])
-            return buttons[i]
-        }
-    }
-    return false;
-}
+// function buttonProx(e) {
+//     for (let i = 0; i < buttons.length; i++) {
+//         if (Math.abs(buttons[i].x - e.clientX) < buttons[i].width && Math.abs(buttons[i].y - e.clientY) < buttons[i].height) {
+//             // console.log("buttonPRox")
+//             console.log(buttons[i])
+//             return buttons[i]
+//         }
+//     }
+//     return false;
+// }
 
 Math.distance = function (A, B) {
     var a = A.x - B.x;
