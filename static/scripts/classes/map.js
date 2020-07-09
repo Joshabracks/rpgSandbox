@@ -8,6 +8,7 @@ class HexMap {
         this.world = [[new HexTile("grassTile", 0, 0, jMoob, 1)]];
         this.drawIndex = [[0, 0]];
         let tree = false;
+        this.fullRender = false;
         for (let i = 1; i < size; i++) {
             this.world[i] = [];
             for (let j = 0; j < i * 6; j++) {
@@ -45,6 +46,7 @@ class HexMap {
                 this.drawIndex.push([i, j]);
             }
         }
+        this.fullRender = true;
         this.angle = 0;
         this.orientation = 0;
         this.orderWorld()

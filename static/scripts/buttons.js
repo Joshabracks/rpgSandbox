@@ -37,12 +37,13 @@ const editMapContainer = document.getElementById('editMapContainer');
 const editMapButton = new Button(
     "Edit Map",
     (targetButton) => {
-        if (editMapContainer.style.display == "none") {
-            editMapContainer.style.display = "block";
+        if (!targetButton.classList.contains('active-button')) {
+            editMapContainer.style.top = "70px";
             editMap = true;
             targetButton.classList.add('active-button');
         } else {
-            editMapContainer.style.display = "none";
+            editMapContainer.style.top = "-" + editMapContainer.offsetHeight + "px";
+            // editMapContainer.style.display = "none";
             editMap = false;
             targetButton.classList.remove('active-button');
         }
@@ -73,6 +74,7 @@ for (let i = 0; i < tilesWheel.length; i++) {
     )
     button.show()
 }
+document.querySelector("#editMapContainer button").classList.add("active-button")
 var deleteButton = new Button("Delete",
     (targetButton) => {
         var removeButton = document.querySelector('#editMapContainer .active-button');
@@ -119,7 +121,8 @@ characterButton = new Button("Characters",
     "block"
 )
 characterButton.show();
-
+console.log(editMapContainer.offsetHeight)
+editMapContainer.style.top = "-" + (buttons.length * 35) + "px";
 // function addSwatches() {
 //     console.log(tilesWheel)
 //     for (let i = 0; i < tilesWheel.length; i++) {

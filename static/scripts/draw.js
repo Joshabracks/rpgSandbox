@@ -63,14 +63,15 @@ function drawScreen() {
                 FPS.benchmarking++;
             }
             ctx.fillStyle = "red";
-            ctx.fillText(FPS.low, 50, 50);
+            ctx.fillText(FPS.low, 500, 50);
             ctx.fillStyle = "white";
-            ctx.fillText(FPS.current, 50, 75);
+            ctx.fillText(FPS.current, 500, 75);
             ctx.fillStyle = "black";
-            ctx.fillText(FPS.high, 50, 100);
+            ctx.fillText(FPS.high, 500, 100);
+            console.log(map.fullRender)
         }
     }
-    if (document.getElementById('ui').style.display == 'none') {
+    if (document.getElementById('ui').style.display == 'none' && map.fullRender == true) {
         document.getElementById('ui').style.removeProperty('display');
     }
     window.requestAnimationFrame(drawScreen)

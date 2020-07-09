@@ -1,18 +1,26 @@
 * {
     padding: 0px;
     margin: 0px;
+    transition: all 0.5s;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none;   /* Chrome/Safari/Opera */
+    -khtml-user-select: none;    /* Konqueror */
+    -moz-user-select: none;      /* Firefox */
+    -ms-user-select: none;       /* Internet Explorer/Edge */
+    user-select: none;   
 }
 
 button {
     transition-duration: .5;
-    width: 75px;
-    height: 75px;
+    width: 80px;
+    height: 35px;
     outline: 0;
+    font-size: .75em;
     border-style: solid;
     border-width: 5px;
 }
 
 .active-button {
-    border-radius: 2px;
-    border-style: double;
+    height: 70px;
+    font-weight: bold;
 }
